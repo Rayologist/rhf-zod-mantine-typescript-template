@@ -1,12 +1,35 @@
-# Mantine-styled Formik Components in Typescript
+# Mantine-styled RHF (React Hook Form) Controlled Components in Typescript and NextJS
 
-This [mantine-next-template](https://github.com/mantinedev/mantine-next-template) integrates [Formik](https://github.com/jaredpalmer/formik) as a means of form contol. Input components developed by Mantine can be easily controlled through `<FormikController />`.
+This [mantine-next-template](https://github.com/mantinedev/mantine-next-template) integrates [React Hook Form](https://github.com/react-hook-form/react-hook-form) as a means of form contol and [Zod](https://github.com/colinhacks/zod) as form validation. Input components developed by Mantine can be easily controlled through `<FormController />`.
 
-## The `useSimpleForm` Hook
+## The `useForm` Hook
 
-A custom hook `useSimpleForm` is implemented to solve the problem of boilerplate codes when developers are constructing Formik forms, as shown in `src/pages/index.tsx`. The simple form example is adapted from [Mantine UI](https://ui.mantine.dev/category/authentication#authentication-title), and can be found in `src/pages/simple-form.tsx`.
+A custom hook `useForm` is implemented as a wrapper of RHF to solve the problem of boilerplate codes when developers are constructing forms, as shown in `src/pages/index.tsx`. The simple form example is adapted from [Mantine UI](https://ui.mantine.dev/category/authentication#authentication-title), and can be found in `src/pages/simple-form.tsx`.
 
 ![Sample Form](assets/form.png)
+
+### Usage
+
+The usage is almost the same as `useForm` from [`React Hook Form`](https://react-hook-form.com/api/useform). However, there are four fields required:
+
+1. defaultvalues: same as RHF but required
+2. onSubmit(data, actions, event) => void:
+   Same as RHF [`handleSubmit`](https://react-hook-form.com/api/useform/handlesubmit), but the `actions` paramenter is hooked into the function through currying, where post submit actions can be done within.
+3. schema: Zod schema.
+4. controllers: objects of field props. Required props: control (controlled components), label (Field label), name (HTML input name)
+
+## Current List of Controlled Components from Mantine
+
+- [x] [Checkbox Group](https://mantine.dev/core/checkbox/)
+- [x] [File Input](https://mantine.dev/core/file-input/)
+- [x] [Multi-Select](https://mantine.dev/core/multi-select/)
+- [x] [Number Input](https://mantine.dev/core/number-input/)
+- [x] [Password Input](https://mantine.dev/core/password-input/)
+- [x] [Radio Group](https://mantine.dev/core/radio/)
+- [x] [Select](https://mantine.dev/core/select/)
+- [x] [Text Area](https://mantine.dev/core/textarea/)
+- [x] [Text Input](https://mantine.dev/core/text-input/)
+- [x] [Date Picker](https://mantine.dev/dates/date-picker/)
 
 ## Getting Started
 
@@ -24,4 +47,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Contact
 
-If you have any questions, please feel free to contact me at rayologist1002@gmail.com
+If you have any questions, please feel free to file issues or contact me at **rayologist1002@gmail.com**
