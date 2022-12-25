@@ -2,11 +2,12 @@
 
 This [mantine-next-template](https://github.com/mantinedev/mantine-next-template) integrates [React Hook Form](https://github.com/react-hook-form/react-hook-form) as a means of form contol and [Zod](https://github.com/colinhacks/zod) as form validation. Input components developed by Mantine can be easily controlled through `<FormController />`.
 
+![Sample Form](assets/form.png)
+
 ## The `useForm` Hook
 
-A custom hook `useForm` is implemented as a wrapper of RHF to solve the problem of boilerplate codes when developers are constructing forms, as shown in [`src/containers/Form.tsx`](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/containers/Form.tsx#L216-L242). The simple form example is adapted from [Mantine UI](https://ui.mantine.dev/category/authentication#authentication-title), and can be found in [`src/pages/simple-form.tsx`](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L11-L43).
+A custom hook `useForm` is implemented as a wrapper of RHF to solve the problem of boilerplate codes as shown in [`src/containers/Form.tsx`](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/containers/Form.tsx#L216-L242) when developers are constructing forms. The sample form  is adapted from [Mantine UI](https://ui.mantine.dev/category/authentication#authentication-title), and can be found in [`src/pages/simple-form.tsx`](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L11-L43).
 
-![Sample Form](assets/form.png)
 
 ### Usage
 
