@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import { DatePickerProps as MantineDatePickerProps } from '@mantine/dates';
 import { ReactNode } from 'react';
-import { FieldErrors, FieldValues, UseFormReturn } from 'react-hook-form';
+import { FieldValues, UseFormReturn } from 'react-hook-form';
 
 export type Option = {
   label: ReactNode;
@@ -64,20 +64,3 @@ export type FormControllerProps<TFieldValues extends FieldValues = FieldValues, 
     };
   };
 };
-
-export type SubmitActions<TFieldValues extends FieldValues, TContext> = Omit<
-  UseFormReturn<TFieldValues, TContext>,
-  'register' | 'unregister' | 'watch' | 'handleSubmit' | 'control'
->;
-
-export type OnSubmit<TFieldValues extends FieldValues, TContext> = (
-  data: TFieldValues,
-  actions: SubmitActions<TFieldValues, TContext>,
-  event?: React.BaseSyntheticEvent
-) => void;
-
-export type OnSubmitError<TFieldValues extends FieldValues, TContext> = (
-  errors: FieldErrors<TFieldValues>,
-  actions: SubmitActions<TFieldValues, TContext>,
-  event?: React.BaseSyntheticEvent
-) => void;
