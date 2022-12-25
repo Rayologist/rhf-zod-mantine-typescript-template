@@ -8,7 +8,7 @@ const sleep = (ms: number) =>
   });
 
 export default function AuthenticationTitle() {
-  const [LoginForm, methods] = useForm<{ account: string; password: string }>({
+  const [Form, methods] = useForm<{ account: string; password: string }>({
     defaultValues: {
       account: '',
       password: '',
@@ -69,7 +69,7 @@ export default function AuthenticationTitle() {
             With Render Props
           </Title>
           {/* eslint-disable @typescript-eslint/no-shadow */}
-          <LoginForm>
+          <Form>
             {({ formState: { isSubmitting } }) => (
               <Box mt={25}>
                 <Group position="apart">
@@ -81,19 +81,19 @@ export default function AuthenticationTitle() {
                     Forgot password?
                   </Anchor>
                 </Group>
-                <LoginForm.Button fullWidth mt="xl" loading={isSubmitting} type="submit">
+                <Form.Button fullWidth mt="xl" loading={isSubmitting} type="submit">
                   {isSubmitting ? 'Signing in...' : 'Sign in'}
-                </LoginForm.Button>
+                </Form.Button>
               </Box>
             )}
-          </LoginForm>
+          </Form>
         </Paper>
 
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <Title order={3} mb={20} align="center">
             With Returned Methods
           </Title>
-          <LoginForm />
+          <Form />
           <Box mt={25}>
             <Group position="apart">
               <Checkbox
@@ -104,9 +104,9 @@ export default function AuthenticationTitle() {
                 Forgot password?
               </Anchor>
             </Group>
-            <LoginForm.Button fullWidth mt="xl" loading={isSubmitting} type="submit">
+            <Form.Button fullWidth mt="xl" loading={isSubmitting} type="submit">
               {isSubmitting ? 'Signing in...' : 'Sign in'}
-            </LoginForm.Button>
+            </Form.Button>
           </Box>
         </Paper>
       </Group>
