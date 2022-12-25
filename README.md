@@ -4,7 +4,7 @@ This [mantine-next-template](https://github.com/mantinedev/mantine-next-template
 
 ## The `useForm` Hook
 
-A custom hook `useForm` is implemented as a wrapper of RHF to solve the problem of boilerplate codes when developers are constructing forms, as shown in `src/pages/index.tsx`. The simple form example is adapted from [Mantine UI](https://ui.mantine.dev/category/authentication#authentication-title), and can be found in `src/pages/simple-form.tsx`.
+A custom hook `useForm` is implemented as a wrapper of RHF to solve the problem of boilerplate codes when developers are constructing forms, as shown in [`src/containers/Form.tsx`](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/containers/Form.tsx#L216-L242). The simple form example is adapted from [Mantine UI](https://ui.mantine.dev/category/authentication#authentication-title), and can be found in [`src/pages/simple-form.tsx`](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L11-L43).
 
 ![Sample Form](assets/form.png)
 
@@ -17,6 +17,8 @@ The usage is almost the same as `useForm` from [`React Hook Form`](https://react
    Same as RHF [`handleSubmit`](https://react-hook-form.com/api/useform/handlesubmit), but the `actions` paramenter is hooked into the function through currying, where post submit actions can be done within.
 3. schema: Zod schema.
 4. controllers: objects of field props. Required props: control (controlled components), label (Field label), name (HTML input name)
+
+On top of that, `RHF useForm returned methods` can be accessed using render props as shown in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L65)
 
 ## Current List of Controlled Components from Mantine
 
