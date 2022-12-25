@@ -11,7 +11,9 @@ A custom hook `useForm` is implemented as a wrapper of RHF to solve the problem 
 
 ### Usage
 
-The usage is almost the same as `useForm` from [`React Hook Form`](https://react-hook-form.com/api/useform). However, there are four fields required:
+Please refer directly to the codes [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx).
+
+The props are almost the same as `useForm` in [`React Hook Form`](https://react-hook-form.com/api/useform). However, there are four fields required:
 
 1. defaultvalues: same as RHF but required
 2. onSubmit(data, actions, event) => void:
@@ -19,7 +21,10 @@ The usage is almost the same as `useForm` from [`React Hook Form`](https://react
 3. schema: Zod schema.
 4. controllers: objects of field props. Required props: control (controlled components), label (Field label), name (HTML input name)
 
-On top of that, `RHF useForm returned methods` can be accessed using `render props` as shown in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L65)
+In addition, `RHF useForm returned methods` can be accessed using `render props` as shown in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L65).
+
+Moreover, submit button for the form can be accessed using dot notation [[example](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L73-L75)]. The only difference between this one and that of mantine is that `id` and `loaderProps` are already passed to the button props, as shown in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L73-L75).
+
 
 ## Current List of Controlled Components from Mantine
 
