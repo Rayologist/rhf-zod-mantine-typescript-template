@@ -12,7 +12,7 @@ import {
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { FormControllerProps, OnSubmit, OnSubmitError, SubmitActions } from 'types';
+import { FormControllerProps } from 'types';
 import FormController from './FormController';
 
 type AsyncDefaultValues<TFieldValues> = (payload?: unknown) => Promise<TFieldValues>;
@@ -24,8 +24,8 @@ type FormProps<TFieldValues extends FieldValues, TContext> = Omit<
   FormControllerProps<TFieldValues, TContext> & {
     schema: z.ZodType<TFieldValues>;
     defaultValues: TFieldValues | AsyncDefaultValues<TFieldValues>;
-    onSubmit: OnSubmit<TFieldValues, TContext>;
-    onSubmitError?: OnSubmitError<TFieldValues, TContext>;
+    onSubmit: SubmitHandler<TFieldValues>;
+    onSubmitError?: SubmitErrorHandler<TFieldValues>;
   };
 
 const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>(
@@ -34,14 +34,7 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
   const id = useId();
   const theme = useMantineTheme();
 
-  const {
-    controllers,
-    schema,
-    defaultValues,
-    onSubmit: onSubmitInput,
-    onSubmitError: onSubmitErrorInput,
-    ...rest
-  } = props;
+  const { controllers, schema, defaultValues, onSubmit, onSubmitError, ...rest } = props;
 
   const methods = useHookForm<TFieldValues, TContext>({
     resolver: zodResolver(schema),
@@ -49,42 +42,13 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
     ...rest,
   });
 
-  const submitActions = {
-    formState: methods.formState,
-    reset: methods.reset,
-    resetField: methods.resetField,
-    setError: methods.setError,
-    clearErrors: methods.clearErrors,
-    setValue: methods.setValue,
-    setFocus: methods.setFocus,
-    getValues: methods.getValues,
-    getFieldState: methods.getFieldState,
-    trigger: methods.trigger,
-  };
-
-  const onSubmit =
-    (actions: SubmitActions<TFieldValues, TContext>): SubmitHandler<TFieldValues> =>
-    (data, event) =>
-      onSubmitInput(data, actions, event);
-
-  const onSubmitError =
-    (actions: SubmitActions<TFieldValues, TContext>): SubmitErrorHandler<TFieldValues> =>
-    (errors, event) =>
-      onSubmitErrorInput?.(errors, actions, event);
-
-  const FormWrapper = ({
+  const Form = ({
     children,
   }: {
     children?: ReactNode | ((ctx: UseFormReturn<TFieldValues, TContext>) => ReactNode);
   }) => (
     <FormProvider {...methods}>
-      <form
-        id={id}
-        onSubmit={methods.handleSubmit(
-          onSubmit(submitActions),
-          onSubmitErrorInput ? onSubmitError(submitActions) : undefined
-        )}
-      >
+      <form id={id} onSubmit={methods.handleSubmit(onSubmit, onSubmitError)}>
         <Grid justify="center" gutter="xl">
           {Object.values(controllers).map((field, index) => {
             const { col, after, ...controllerProps } = field;
@@ -101,13 +65,16 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
     </FormProvider>
   );
 
-  FormWrapper.Button = (buttonProps: ButtonProps) => (
-    <Button type="submit" form={id} loaderProps={{ color: theme.colors.blue[5] }} {...buttonProps}>
-      {buttonProps.children}
-    </Button>
+  Form.Button = (buttonProps: ButtonProps) => (
+    <Button
+      type="submit"
+      form={id}
+      loaderProps={{ color: theme.colors.blue[5] }}
+      {...buttonProps}
+    />
   );
 
-  return FormWrapper;
+  return [Form, methods] as const;
 };
 
 export default useForm;
