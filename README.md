@@ -18,7 +18,7 @@ The usage is almost the same as `useForm` from [`React Hook Form`](https://react
 3. schema: Zod schema.
 4. controllers: objects of field props. Required props: control (controlled components), label (Field label), name (HTML input name)
 
-On top of that, `RHF useForm returned methods` can be accessed using render props as shown in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L65)
+On top of that, `RHF useForm returned methods` can be accessed using `render props` as shown in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L65)
 
 ## Current List of Controlled Components from Mantine
 
