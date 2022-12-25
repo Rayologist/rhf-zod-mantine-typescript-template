@@ -8,15 +8,15 @@ const sleep = (ms: number) =>
   });
 
 export default function AuthenticationTitle() {
-  const LoginForm = useForm<{ account: string; password: string }>({
+  const [LoginForm, methods] = useForm<{ account: string; password: string }>({
     defaultValues: {
       account: '',
       password: '',
     },
-    onSubmit: async (values, actions) => {
+    onSubmit: async (values) => {
       console.log(values); // eslint-disable-line no-console
       await sleep(1000);
-      actions.setError(
+      methods.setError(
         'account',
         { message: 'Incorrect account or password' },
         { shouldFocus: false }
@@ -42,8 +42,12 @@ export default function AuthenticationTitle() {
     },
   });
 
+  const {
+    formState: { isSubmitting },
+  } = methods;
+
   return (
-    <Container size={420} my={40}>
+    <Container size={800} my={40}>
       <Title
         align="center"
         sx={(theme) => ({
@@ -59,24 +63,53 @@ export default function AuthenticationTitle() {
           Create account
         </Anchor>
       </Text>
+      <Group>
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <Title order={3} mb={20} align="center">
+            With Render Props
+          </Title>
+          {/* eslint-disable @typescript-eslint/no-shadow */}
+          <LoginForm>
+            {({ formState: { isSubmitting } }) => (
+              <Box mt={25}>
+                <Group position="apart">
+                  <Checkbox
+                    label="Remember me"
+                    styles={{ root: { display: 'grid', placeContent: 'center' } }}
+                  />
+                  <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
+                    Forgot password?
+                  </Anchor>
+                </Group>
+                <LoginForm.Button fullWidth mt="xl" loading={isSubmitting} type="submit">
+                  {isSubmitting ? 'Signing in...' : 'Sign in'}
+                </LoginForm.Button>
+              </Box>
+            )}
+          </LoginForm>
+        </Paper>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <LoginForm>
-          {({ formState: { isSubmitting } }) => (
-            <Box mt={30}>
-              <Group position="apart">
-                <Checkbox label="Remember me" />
-                <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
-                  Forgot password?
-                </Anchor>
-              </Group>
-              <LoginForm.Button fullWidth mt="xl" loading={isSubmitting} type="submit">
-                {isSubmitting ? 'Signing in...' : 'Sign in'}
-              </LoginForm.Button>
-            </Box>
-          )}
-        </LoginForm>
-      </Paper>
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+          <Title order={3} mb={20} align="center">
+            With Returned Methods
+          </Title>
+          <LoginForm />
+          <Box mt={25}>
+            <Group position="apart">
+              <Checkbox
+                label="Remember me"
+                styles={{ root: { display: 'grid', placeContent: 'center' } }}
+              />
+              <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
+                Forgot password?
+              </Anchor>
+            </Group>
+            <LoginForm.Button fullWidth mt="xl" loading={isSubmitting} type="submit">
+              {isSubmitting ? 'Signing in...' : 'Sign in'}
+            </LoginForm.Button>
+          </Box>
+        </Paper>
+      </Group>
     </Container>
   );
 }
