@@ -213,31 +213,29 @@ const Form = () => {
   ];
 
   return (
-    <>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit((data) => {
-            console.log(data); // eslint-disable-line no-console
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit((data) => {
+          console.log(data); // eslint-disable-line no-console
+        })}
+      >
+        <Grid justify="center" gutter="xl">
+          {fields.map((field, index) => {
+            const { col } = field;
+            return (
+              <Grid.Col xs={12} sm={12} md={6} lg={6} key={`${field.name}-${index}`} {...col}>
+                <FormController {...field} />
+              </Grid.Col>
+            );
           })}
-        >
-          <Grid justify="center" gutter="xl">
-            {fields.map((field, index) => {
-              const { col } = field;
-              return (
-                <Grid.Col xs={12} sm={12} md={6} lg={6} key={`${field.name}-${index}`} {...col}>
-                  <FormController {...field} />
-                </Grid.Col>
-              );
-            })}
-            <Grid.Col xs={3.5} sm={2.5} md={2.5} lg={2.5} xl={2.5} mt={10}>
-              <Button type="submit" loading={methods.formState.isSubmitting} fullWidth>
-                {methods.formState.isSubmitting ? 'Submitting' : 'Submit'}
-              </Button>
-            </Grid.Col>
-          </Grid>
-        </form>
-      </FormProvider>
-    </>
+          <Grid.Col xs={3.5} sm={2.5} md={2.5} lg={2.5} xl={2.5} mt={10}>
+            <Button type="submit" loading={methods.formState.isSubmitting} fullWidth>
+              {methods.formState.isSubmitting ? 'Submitting' : 'Submit'}
+            </Button>
+          </Grid.Col>
+        </Grid>
+      </form>
+    </FormProvider>
   );
 };
 
