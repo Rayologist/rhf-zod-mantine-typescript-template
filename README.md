@@ -12,12 +12,15 @@ A custom hook `useForm` is implemented as a wrapper of RHF to solve the problem 
 
 Please refer directly to the codes [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx).
 
-The props are almost the same as `useForm` in [`React Hook Form`](https://react-hook-form.com/api/useform). However, there are four fields required:
+The props are almost the same as `useForm` in [`React Hook Form`](https://react-hook-form.com/api/useform). However, there are three fields required:
 
 1. defaultvalues: Same as RHF but required
 2. onSubmit: Same as RHF [`handleSubmit`](https://react-hook-form.com/api/useform/handlesubmit)
-3. schema: Zod schema.
-4. controllers: Objects of field props. Required props: control (controlled components), label (Field label), name (HTML input name)
+3. controllers: Objects of field props. Required props: control (controlled components), label (Field label), name (HTML input name)
+
+And one optional field:
+
+1. schema: Zod schema.
 
 In addition, there are two ways to access `RHF useForm returned methods`:
 
