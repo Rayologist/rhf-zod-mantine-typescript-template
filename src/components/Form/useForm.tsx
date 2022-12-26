@@ -22,8 +22,8 @@ type FormProps<TFieldValues extends FieldValues, TContext> = Omit<
   'defaultValues'
 > &
   FormControllerProps<TFieldValues, TContext> & {
-    schema: z.ZodType<TFieldValues>;
     defaultValues: TFieldValues | AsyncDefaultValues<TFieldValues>;
+    schema?: z.ZodType<TFieldValues>;
     onSubmit: SubmitHandler<TFieldValues>;
     onSubmitError?: SubmitErrorHandler<TFieldValues>;
   };
@@ -37,7 +37,7 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
   const { controllers, schema, defaultValues, onSubmit, onSubmitError, ...rest } = props;
 
   const methods = useHookForm<TFieldValues, TContext>({
-    resolver: zodResolver(schema),
+    resolver: schema ? zodResolver(schema) : undefined,
     defaultValues: defaultValues as UseFormProps<TFieldValues, TContext>['defaultValues'],
     ...rest,
   });
