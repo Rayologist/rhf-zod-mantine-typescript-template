@@ -1,4 +1,12 @@
-import { Button, Grid, ButtonProps, useMantineTheme } from '@mantine/core';
+import {
+  Button,
+  Grid,
+  ButtonProps,
+  useMantineTheme,
+  Box,
+  GridProps,
+  BoxProps,
+} from '@mantine/core';
 import { useId } from '@mantine/hooks';
 import React, { ReactNode } from 'react';
 import {
@@ -42,36 +50,42 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
     ...rest,
   });
 
-  const Form = ({
-    children,
-  }: {
-    children?: ReactNode | ((ctx: UseFormReturn<TFieldValues, TContext>) => ReactNode);
-  }) => (
-    <FormProvider {...methods}>
-      <form id={id} onSubmit={methods.handleSubmit(onSubmit, onSubmitError)}>
-        <Grid justify="center" gutter="xl">
-          {Object.values(controllers).map((field, index) => {
-            const { col, after, ...controllerProps } = field;
-            return (
-              <Grid.Col key={`${field.name}-${index}`} {...col}>
-                <FormController {...controllerProps} />
-                {typeof after === 'function' ? after(methods) : after}
-              </Grid.Col>
-            );
-          })}
-        </Grid>
-        {typeof children === 'function' ? children(methods) : children}
-      </form>
-    </FormProvider>
-  );
+  /* eslint-disable @typescript-eslint/no-shadow */
+  const Form = (
+    props: {
+      children?: ReactNode | ((ctx: UseFormReturn<TFieldValues, TContext>) => ReactNode);
+      grid?: Omit<GridProps, 'children'>;
+    } & BoxProps
+  ) => {
+    const { children, grid, ...rest } = props;
+    return (
+      <FormProvider {...methods}>
+        <Box<'form'>
+          component="form"
+          id={id}
+          onSubmit={methods.handleSubmit(onSubmit, onSubmitError)}
+          {...rest}
+        >
+          <Grid justify="center" gutter="lg" {...grid}>
+            {Object.values(controllers).map((field, index) => {
+              const { col, after, ...controllerProps } = field;
+              return (
+                <Grid.Col key={`${field.name}-${index}`} {...col}>
+                  <FormController {...controllerProps} />
+                  {typeof after === 'function' ? after(methods) : after}
+                </Grid.Col>
+              );
+            })}
+          </Grid>
+          {typeof children === 'function' ? children(methods) : children}
+        </Box>
+      </FormProvider>
+    );
+  };
 
-  Form.Button = (buttonProps: ButtonProps) => (
-    <Button
-      type="submit"
-      form={id}
-      loaderProps={{ color: theme.colors.blue[5] }}
-      {...buttonProps}
-    />
+  /* eslint-disable @typescript-eslint/no-shadow */
+  Form.Button = (props: ButtonProps) => (
+    <Button type="submit" form={id} loaderProps={{ color: theme.colors.blue[5] }} {...props} />
   );
 
   return [Form, methods] as const;
