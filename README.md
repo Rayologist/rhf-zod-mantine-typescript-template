@@ -1,6 +1,6 @@
 # Mantine-styled RHF (React Hook Form) Controlled Components in Typescript and NextJS
 
-This [mantine-next-template](https://github.com/mantinedev/mantine-next-template) integrates [React Hook Form](https://github.com/react-hook-form/react-hook-form) as a means of form contol and [Zod](https://github.com/colinhacks/zod) as form validation. Input components developed by Mantine can be easily controlled through `<FormController />`.
+This [mantine-next-template](https://github.com/mantinedev/mantine-next-template) integrates [React Hook Form](https://github.com/react-hook-form/react-hook-form) as a means of form contol and [Zod](https://github.com/colinhacks/zod) as form validation. Input components developed by Mantine can be easily controlled through `<FormController />` as in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/main/src/containers/Form.tsx).
 
 ![Sample Form](assets/form.png)
 
