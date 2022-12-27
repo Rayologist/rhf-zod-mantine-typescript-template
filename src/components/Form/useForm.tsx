@@ -55,7 +55,7 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
     props: {
       children?: ReactNode | ((ctx: UseFormReturn<TFieldValues, TContext>) => ReactNode);
       grid?: Omit<GridProps, 'children'>;
-    } & BoxProps
+    } & Omit<BoxProps, 'children'>
   ) => {
     const { children, grid, ...rest } = props;
     return (
