@@ -6,11 +6,11 @@ This [mantine-next-template](https://github.com/mantinedev/mantine-next-template
 
 ## The `useForm` Hook
 
-A custom hook `useForm` is implemented as a wrapper of RHF to solve the problem of boilerplate codes as shown in [`src/containers/Form.tsx`](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/containers/Form.tsx#L216-L242) when developers are constructing forms. The sample form  is adapted from [Mantine UI](https://ui.mantine.dev/category/authentication#authentication-title), and can be found in [`src/pages/simple-form.tsx`](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L11-L43).
+A custom hook `useForm` is implemented as a wrapper of RHF to solve the problem of boilerplate codes as shown in [`src/containers/Form.tsx`](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/main/src/containers/Form.tsx#L216-L242) when developers are constructing forms. The sample form  is adapted from [Mantine UI](https://ui.mantine.dev/category/authentication#authentication-title), and can be found in [`src/pages/simple-form.tsx`](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/main/src/pages/simple-form.tsx#L11-L43).
 
 ### Usage
 
-Please refer directly to the codes [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx).
+Please refer directly to the codes [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/main/src/pages/simple-form.tsx).
 
 The props are almost the same as `useForm` in [`React Hook Form`](https://react-hook-form.com/api/useform). However, there are three fields required:
 
@@ -25,10 +25,10 @@ And two optional fields:
 
 In addition, there are two ways to access `RHF useForm returned methods`:
 
-   1. Using array destructured value, as exemplified [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/1eb0eeabc390810dbfbe6bc777edc87f330dc424/src/pages/simple-form.tsx#L11).
-   2. Using `render props` as shown in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/1eb0eeabc390810dbfbe6bc777edc87f330dc424/src/pages/simple-form.tsx#L73-L87).
+   1. Using array destructured value, as exemplified [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/main/src/pages/simple-form.tsx#L11).
+   2. Using `render props` as shown in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/main/src/pages/simple-form.tsx#L73-L87).
 
-Moreover, submit button for the form can be accessed using dot notation [[example](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/1eb0eeabc390810dbfbe6bc777edc87f330dc424/src/pages/simple-form.tsx#L84-L86)]. The only difference between this one and that of mantine is that `id` and `loaderProps` are already passed to the button props, as shown in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/e2649eab77932dc9458ddae9e2c180fe3567ea0e/src/pages/simple-form.tsx#L73-L75), so that the button does not have to live inside html form tag, such as [this one](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/1eb0eeabc390810dbfbe6bc777edc87f330dc424/src/pages/simple-form.tsx#L107-L109).
+Moreover, submit button for the form can be accessed using dot notation [[example](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/main/src/pages/simple-form.tsx#L84-L86)]. The only difference between this one and that of mantine is that `id` and `loaderProps` are already passed to the button props, as shown in [here](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/main/src/pages/simple-form.tsx#L73-L75), so that the button does not have to live inside html form tag, such as [this one](https://github.com/Rayologist/rhf-zod-mantine-typescript-template/blob/main/src/pages/simple-form.tsx#L107-L109).
 
 ## Current List of Controlled Components from Mantine
 
