@@ -1,11 +1,13 @@
 import { useForm as useHookForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Button, Grid, ColProps } from '@mantine/core';
+import { Button, Grid, ColProps, useMantineTheme } from '@mantine/core';
 import { ControllerProps } from 'types';
 import { FormController } from '@components/Form';
+import { IconCheck, IconX } from '@tabler/icons';
 
 const Form = () => {
+  const theme = useMantineTheme();
   const schema = z
     .object({
       username: z.string().min(1, { message: 'Required' }),
@@ -41,6 +43,7 @@ const Form = () => {
         }),
       programmingLanguage: z.string().array().min(1, { message: 'Required' }),
       resume: z.custom<File>().array().min(1, { message: 'Required' }),
+      notification: z.string().array().optional(),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: 'Passwords do not match',
@@ -60,6 +63,7 @@ const Form = () => {
     date: Date | null;
     programmingLanguage: Array<string>;
     resume: File[];
+    notification: string[];
   }>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -75,6 +79,7 @@ const Form = () => {
       date: null,
       programmingLanguage: [],
       resume: [],
+      notification: ['agreed'],
     },
     mode: 'onTouched',
   });
@@ -205,6 +210,28 @@ const Form = () => {
       name: 'comments',
       label: 'Comments',
       withAsterisk: true,
+      col: {
+        md: 12,
+        lg: 12,
+      },
+    },
+    {
+      control: 'switch-group',
+      name: 'notification',
+      label: 'Settings',
+      options: [
+        {
+          label: 'I agree to receive notifications',
+          value: 'agreed',
+          color: 'teal',
+          thumbIcon:
+            methods.watch('notification').length > 0 ? (
+              <IconCheck size={12} color={theme.colors.teal[theme.fn.primaryShade()]} stroke={3} />
+            ) : (
+              <IconX size={12} color={theme.colors.red[theme.fn.primaryShade()]} stroke={3} />
+            ),
+        },
+      ],
       col: {
         md: 12,
         lg: 12,
