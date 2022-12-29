@@ -26,13 +26,11 @@ function CheckboxGroup(props: CheckboxGroupProps) {
       {...rest}
       {...restField}
     >
-      {options.map((option, index) => (
-        <MantineCheckbox
-          key={`${option.label}-${index}`}
-          label={option.label}
-          value={option.value}
-        />
-      ))}
+      {/* eslint-disable @typescript-eslint/no-shadow */}
+      {options.map((option, index) => {
+        const { label, value, ...rest } = option;
+        return <MantineCheckbox key={`${label}-${index}`} label={label} value={value} {...rest} />;
+      })}
     </MantineCheckbox.Group>
   );
 }

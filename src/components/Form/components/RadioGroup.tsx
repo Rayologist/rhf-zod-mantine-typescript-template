@@ -28,9 +28,11 @@ function RadioGroup(props: RadioGroupProps) {
       {...rest}
       {...restField}
     >
-      {options.map((option, index) => (
-        <Radio key={`${option.label}-${index}`} value={option.value} label={option.label} />
-      ))}
+      {/* eslint-disable @typescript-eslint/no-shadow */}
+      {options.map((option, index) => {
+        const { label, value, ...rest } = option;
+        return <Radio key={`${label}-${index}`} value={value} label={label} {...rest} />;
+      })}
     </Radio.Group>
   );
 }
