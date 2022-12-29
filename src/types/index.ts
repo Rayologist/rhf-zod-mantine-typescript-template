@@ -1,26 +1,30 @@
 import {
   PasswordInputProps as MantinePasswordInputProps,
   RadioGroupProps as MantineRadioGroupProps,
+  RadioProps,
   SelectProps as MantineSelectProps,
   TextareaProps as MantineTextareaProps,
   TextInputProps as MantineTextInputProps,
   CheckboxGroupProps as MantineCheckboxGroupProps,
+  CheckboxProps,
   NumberInputProps as MantineNumberInputProps,
   MultiSelectProps as MantineMultiSelectProps,
   FileInputProps as MantineFileInputProps,
+  SwitchGroupProps as MantineSwitchGroupProps,
+  SwitchProps,
   ColProps,
 } from '@mantine/core';
 import { DatePickerProps as MantineDatePickerProps } from '@mantine/dates';
 import { ReactNode } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
-export type Option = {
+export type Option<OtherProps = {}> = {
   label: ReactNode;
   value: any;
-};
+} & OtherProps;
 
-export interface Options {
-  options: Option[];
+export interface Options<OtherProps = {}> {
+  options: Option<OtherProps>[];
 }
 
 export type Controlled<T> = { label: ReactNode; name: string } & T;
@@ -36,12 +40,19 @@ export type SelectProps = Controlled<
     options: MantineSelectProps['data'];
   }
 >;
-export type CheckboxGroupProps = Controlled<Omit<MantineCheckboxGroupProps, 'children'> & Options>;
-export type RadioGroupProps = Controlled<Omit<MantineRadioGroupProps, 'children'> & Options>;
 export type MultiSelectProps = Controlled<
   Omit<MantineMultiSelectProps, 'data'> & {
     options: MantineMultiSelectProps['data'];
   }
+>;
+export type CheckboxGroupProps = Controlled<
+  Omit<MantineCheckboxGroupProps, 'children'> & Options<CheckboxProps>
+>;
+export type RadioGroupProps = Controlled<
+  Omit<MantineRadioGroupProps, 'children'> & Options<RadioProps>
+>;
+export type SwitchGroupProps = Controlled<
+  Omit<MantineSwitchGroupProps, 'children'> & Options<SwitchProps>
 >;
 
 export type ControllerProps =
@@ -54,7 +65,8 @@ export type ControllerProps =
   | ({ control: 'date-picker' } & DatePickerProps)
   | ({ control: 'number-input' } & NumberInputProps)
   | ({ control: 'multi-select' } & MultiSelectProps)
-  | ({ control: 'file-input' } & FileInputProps<boolean>);
+  | ({ control: 'file-input' } & FileInputProps<boolean>)
+  | ({ control: 'switch-group' } & SwitchGroupProps);
 
 export type FormControllerProps<TFieldValues extends FieldValues = FieldValues, TContext = any> = {
   controllers: {
