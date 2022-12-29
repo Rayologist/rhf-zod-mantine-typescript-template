@@ -10,6 +10,7 @@ import DatePicker from './components/DatePicker';
 import NumberInput from './components/NumberInput';
 import MultiSelect from './components/MultiSelect';
 import FileInput from './components/FileInput';
+import SwitchGroup from './components/SwitchGroup';
 
 function FormController(props: ControllerProps) {
   const { control } = props;
@@ -35,6 +36,8 @@ function FormController(props: ControllerProps) {
       return <MultiSelect {...props} />;
     case 'file-input':
       return <FileInput {...props} />;
+    case 'switch-group':
+      return <SwitchGroup {...props} />;
     default:
       return null;
   }
