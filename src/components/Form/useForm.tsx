@@ -42,7 +42,14 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
   const id = useId();
   const theme = useMantineTheme();
 
-  const { controllers, schema, defaultValues, onSubmit, onSubmitError, ...rest } = props;
+  const {
+    controllers: rawControllers,
+    schema,
+    defaultValues,
+    onSubmit,
+    onSubmitError,
+    ...rest
+  } = props;
 
   const methods = useHookForm<TFieldValues, TContext>({
     resolver: schema ? zodResolver(schema) : undefined,
@@ -58,6 +65,10 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
     } & Omit<BoxProps, 'children'>
   ) => {
     const { children, grid, ...rest } = props;
+    let controllers = rawControllers;
+    if (rawControllers instanceof Function) {
+      controllers = rawControllers(methods);
+    }
     return (
       <FormProvider {...methods}>
         <Box<'form'>
