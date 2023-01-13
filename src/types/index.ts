@@ -68,7 +68,7 @@ export type ControllerProps =
   | ({ control: 'file-input' } & FileInputProps<boolean>)
   | ({ control: 'switch-group' } & SwitchGroupProps);
 
-type Controllers<TFieldValues extends FieldValues, TContext> = {
+export type Controllers<TFieldValues extends FieldValues, TContext> = {
   [key in keyof TFieldValues]: ControllerProps & { name: key } & {
     col?: ColProps;
     after?: ReactNode | ((ctx: UseFormReturn<TFieldValues, TContext>) => ReactNode);
