@@ -1,8 +1,16 @@
 import { FileInputProps, Group, Center } from '@mantine/core';
-import { IconPhoto } from '@tabler/icons';
+import { IconFileText, IconPhoto, TablerIcon } from '@tabler/icons';
 
-function Value({ file, single }: { file: File | null; single?: boolean }) {
+function Value({ file }: { file: File | null }) {
   if (!file) return null;
+  let Icon: TablerIcon;
+
+  if (file.type.includes('image')) {
+    Icon = IconPhoto;
+  } else {
+    Icon = IconFileText;
+  }
+
   return (
     <Center
       inline
@@ -13,13 +21,13 @@ function Value({ file, single }: { file: File | null; single?: boolean }) {
         borderRadius: theme.radius.sm,
       })}
     >
-      <IconPhoto size={14} style={{ marginRight: 5 }} />
+      <Icon size={14} style={{ marginRight: 5 }} />
       <span
         style={{
           whiteSpace: 'nowrap',
-          textOverflow: single ? undefined : 'ellipsis',
+          textOverflow: 'ellipsis',
           overflow: 'hidden',
-          maxWidth: single ? undefined : 200,
+          maxWidth: 200,
           display: 'inline-block',
         }}
       >
@@ -40,7 +48,7 @@ const ValueComponent: FileInputProps['valueComponent'] = ({ value }) => {
     );
   }
 
-  return <Value file={value} single />;
+  return <Value file={value} />;
 };
 
 export default ValueComponent;
