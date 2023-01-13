@@ -20,7 +20,7 @@ import {
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { FormControllerProps } from 'types';
+import { Controllers, FormControllerProps } from 'types';
 import FormController from './FormController';
 
 type AsyncDefaultValues<TFieldValues> = (payload?: unknown) => Promise<TFieldValues>;
@@ -65,10 +65,14 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
     } & Omit<BoxProps, 'children'>
   ) => {
     const { children, grid, ...rest } = props;
-    let controllers = rawControllers;
+    let controllers: Controllers<TFieldValues, TContext>;
+
     if (rawControllers instanceof Function) {
       controllers = rawControllers(methods);
+    } else {
+      controllers = rawControllers;
     }
+
     return (
       <FormProvider {...methods}>
         <Box<'form'>
