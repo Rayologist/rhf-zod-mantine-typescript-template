@@ -8,24 +8,13 @@ function DatePicker(props: DatePickerProps) {
   const {
     field,
     fieldState: { error: fieldError },
-    formState: { defaultValues },
   } = useController({ name });
 
   const error = fieldError ? (
     <ErrorMessage>{fieldError.message?.toString()}</ErrorMessage>
   ) : undefined;
 
-  const { onChange, ...restField } = field;
-
-  return (
-    <MantineDatePicker
-      label={label}
-      error={error}
-      onChange={(value) => onChange(value ?? defaultValues?.[name])}
-      {...rest}
-      {...restField}
-    />
-  );
+  return <MantineDatePicker label={label} error={error} {...rest} {...field} />;
 }
 
 export default DatePicker;

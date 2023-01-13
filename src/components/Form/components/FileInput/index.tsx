@@ -10,24 +10,20 @@ function FileInput(props: FileInputProps<boolean>) {
   const {
     field,
     fieldState: { error: fieldError },
-    formState: { defaultValues },
   } = useController({ name });
 
   const error = fieldError ? (
     <ErrorMessage>{fieldError.message?.toString()}</ErrorMessage>
   ) : undefined;
 
-  const { onChange, ...restField } = field;
-
   return (
     <MantineFileInput
       label={label}
       icon={<IconUpload size={14} />}
       valueComponent={ValueComponent}
-      onChange={(value) => onChange(value ?? defaultValues?.[name])}
       error={error}
       {...rest}
-      {...restField}
+      {...field}
     />
   );
 }
