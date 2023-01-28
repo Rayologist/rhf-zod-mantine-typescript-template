@@ -1,5 +1,5 @@
 import { FileInputProps, Group, Center } from '@mantine/core';
-import { IconFileText, IconPhoto, TablerIcon } from '@tabler/icons';
+import { IconFileText, IconPhoto, Icon as TablerIcon } from '@tabler/icons-react';
 
 function Value({ file }: { file: File | null }) {
   if (!file) return null;

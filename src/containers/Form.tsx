@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { Button, Grid, ColProps, useMantineTheme } from '@mantine/core';
 import { ControllerProps } from 'types';
 import { FormController } from '@components/Form';
-import { IconCheck, IconX } from '@tabler/icons';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
 const Form = () => {
   const theme = useMantineTheme();
