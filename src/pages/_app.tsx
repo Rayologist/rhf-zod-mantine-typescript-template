@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { getCookie, setCookie } from 'cookies-next';
 import Head from 'next/head';
 import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
-import { NotificationsProvider } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
 
 function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
@@ -28,9 +28,8 @@ function App(props: AppProps & { colorScheme: ColorScheme }) {
 
       <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
         <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-          <NotificationsProvider>
-            <Component {...pageProps} />
-          </NotificationsProvider>
+          <Notifications />
+          <Component {...pageProps} />
         </MantineProvider>
       </ColorSchemeProvider>
     </>
