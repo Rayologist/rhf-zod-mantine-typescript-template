@@ -15,6 +15,8 @@ import {
   ColProps,
   GroupProps,
   StackProps,
+  PinInputProps as MantinePinInputProps,
+  InputWrapperBaseProps,
 } from '@mantine/core';
 import { DateInputProps as MantineDateInputProps } from '@mantine/dates';
 import { ReactNode } from 'react';
@@ -38,6 +40,7 @@ export type PasswordInputProps = Controlled<MantinePasswordInputProps>;
 export type TextareaProps = Controlled<MantineTextareaProps>;
 export type NumberInputProps = Controlled<MantineNumberInputProps>;
 export type DateInputProps = Controlled<MantineDateInputProps>;
+export type PinInputProps = Controlled<MantinePinInputProps> & InputWrapperBaseProps;
 export type FileInputProps<T extends boolean> = Controlled<MantineFileInputProps<T>>;
 export type SelectProps = Controlled<
   Omit<MantineSelectProps, 'data'> & {
@@ -60,17 +63,18 @@ export type SwitchGroupProps = Controlled<
 >;
 
 export type ControllerProps =
-  | ({ control: 'text-input' } & TextInputProps)
-  | ({ control: 'password-input' } & PasswordInputProps)
-  | ({ control: 'select' } & SelectProps)
   | ({ control: 'checkbox-group' } & CheckboxGroupProps)
-  | ({ control: 'radio-group' } & RadioGroupProps)
-  | ({ control: 'text-area' } & TextareaProps)
   | ({ control: 'date-input' } & DateInputProps)
-  | ({ control: 'number-input' } & NumberInputProps)
-  | ({ control: 'multi-select' } & MultiSelectProps)
   | ({ control: 'file-input' } & FileInputProps<boolean>)
-  | ({ control: 'switch-group' } & SwitchGroupProps);
+  | ({ control: 'multi-select' } & MultiSelectProps)
+  | ({ control: 'number-input' } & NumberInputProps)
+  | ({ control: 'password-input' } & PasswordInputProps)
+  | ({ control: 'pin-input' } & PinInputProps)
+  | ({ control: 'radio-group' } & RadioGroupProps)
+  | ({ control: 'select' } & SelectProps)
+  | ({ control: 'switch-group' } & SwitchGroupProps)
+  | ({ control: 'text-area' } & TextareaProps)
+  | ({ control: 'text-input' } & TextInputProps);
 
 export type Controllers<TFieldValues extends FieldValues, TContext> = {
   [key in keyof TFieldValues]: ControllerProps & { name: key } & {
