@@ -44,6 +44,22 @@ const Form = () => {
       programmingLanguage: z.string().array().min(1, { message: 'Required' }),
       resume: z.custom<File>().array().min(1, { message: 'Required' }),
       notification: z.string().array().optional(),
+      code: z.string().superRefine((value, ctx) => {
+        if (value.length === 6 && value !== '123456') {
+          ctx.addIssue({
+            code: 'custom',
+            message: 'Wrong Code',
+          });
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        if (methods.formState.isSubmitting && value.length !== 6) {
+          ctx.addIssue({
+            code: 'custom',
+            message: 'Required',
+          });
+        }
+      }),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: 'Passwords do not match',
@@ -64,6 +80,7 @@ const Form = () => {
     programmingLanguage: Array<string>;
     resume: File[];
     notification: string[];
+    code: string;
   }>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -80,6 +97,7 @@ const Form = () => {
       programmingLanguage: [],
       resume: [],
       notification: ['agreed'],
+      code: '',
     },
     mode: 'onTouched',
   });
@@ -235,6 +253,22 @@ const Form = () => {
       col: {
         md: 12,
         lg: 12,
+      },
+    },
+    {
+      control: 'pin-input',
+      label: 'Verification Code',
+      name: 'code',
+      oneTimeCode: true,
+      placeholder: '',
+      withAsterisk: true,
+      mask: true,
+      length: 6,
+      size: 'md',
+      col: {
+        md: 12,
+        lg: 12,
+        mt: 10,
       },
     },
   ];
