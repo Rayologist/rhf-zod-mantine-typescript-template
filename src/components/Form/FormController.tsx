@@ -6,7 +6,7 @@ import Select from './components/Select';
 import CheckboxGroup from './components/CheckboxGroup';
 import RadioGroup from './components/RadioGroup';
 import Textarea from './components/Textarea';
-import DatePicker from './components/DatePicker';
+import DateInput from './components/DateInput';
 import NumberInput from './components/NumberInput';
 import MultiSelect from './components/MultiSelect';
 import FileInput from './components/FileInput';
@@ -31,7 +31,7 @@ function FormController(props: ControllerProps) {
     case 'text-area':
       return <Textarea {...props} />;
     case 'date-picker':
-      return <DatePicker {...props} />;
+      return <DateInput {...props} />;
     case 'multi-select':
       return <MultiSelect {...props} />;
     case 'file-input':

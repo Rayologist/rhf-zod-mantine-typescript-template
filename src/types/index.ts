@@ -14,7 +14,7 @@ import {
   SwitchProps,
   ColProps,
 } from '@mantine/core';
-import { DatePickerProps as MantineDatePickerProps } from '@mantine/dates';
+import { DateInputProps as MantineDateInputProps } from '@mantine/dates';
 import { ReactNode } from 'react';
 import { FieldValues, UseFormReturn } from 'react-hook-form';
 
@@ -33,7 +33,7 @@ export type TextInputProps = Controlled<MantineTextInputProps>;
 export type PasswordInputProps = Controlled<MantinePasswordInputProps>;
 export type TextareaProps = Controlled<MantineTextareaProps>;
 export type NumberInputProps = Controlled<MantineNumberInputProps>;
-export type DatePickerProps = Controlled<MantineDatePickerProps>;
+export type DateInputProps = Controlled<MantineDateInputProps>;
 export type FileInputProps<T extends boolean> = Controlled<MantineFileInputProps<T>>;
 export type SelectProps = Controlled<
   Omit<MantineSelectProps, 'data'> & {
@@ -62,7 +62,7 @@ export type ControllerProps =
   | ({ control: 'checkbox-group' } & CheckboxGroupProps)
   | ({ control: 'radio-group' } & RadioGroupProps)
   | ({ control: 'text-area' } & TextareaProps)
-  | ({ control: 'date-picker' } & DatePickerProps)
+  | ({ control: 'date-input' } & DateInputProps)
   | ({ control: 'number-input' } & NumberInputProps)
   | ({ control: 'multi-select' } & MultiSelectProps)
   | ({ control: 'file-input' } & FileInputProps<boolean>)
