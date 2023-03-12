@@ -43,7 +43,7 @@ Moreover, submit button for the form can be accessed using dot notation [[exampl
 - [x] [Text Input](https://mantine.dev/core/text-input/)
 - [x] [Date Input](https://mantine.dev/dates/date-input/)
 - [x] [Switch Group](https://mantine.dev/core/switch/)
-- [x] [Pin Input](https://mantine.dev/core/pin-input/)]
+- [x] [Pin Input](https://mantine.dev/core/pin-input/)
 
 ## Getting Started
 
