@@ -30,7 +30,7 @@ function FormController(props: ControllerProps) {
       return <RadioGroup {...props} />;
     case 'text-area':
       return <Textarea {...props} />;
-    case 'date-picker':
+    case 'date-input':
       return <DateInput {...props} />;
     case 'multi-select':
       return <MultiSelect {...props} />;
