@@ -19,6 +19,7 @@ function NumberInput(props: NumberInputProps) {
 
   return (
     <MantineNumberInput
+      id={name}
       label={label}
       onChange={(value) => {
         if (value === '') {

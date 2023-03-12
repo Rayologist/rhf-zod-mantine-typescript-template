@@ -21,6 +21,7 @@ function MultiSelect(props: MultiSelectProps) {
 
   return (
     <MantineMultiSelect
+      id={name}
       label={label}
       data={options}
       onChange={(value) => {

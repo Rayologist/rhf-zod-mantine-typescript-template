@@ -14,7 +14,7 @@ function DatePickerInput(props: DateInputProps) {
     <ErrorMessage>{fieldError.message?.toString()}</ErrorMessage>
   ) : undefined;
 
-  return <MantineDateInput label={label} error={error} {...rest} {...field} />;
+  return <MantineDateInput id={name} label={label} error={error} {...rest} {...field} />;
 }
 
 export default DatePickerInput;
