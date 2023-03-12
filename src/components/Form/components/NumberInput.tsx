@@ -20,7 +20,13 @@ function NumberInput(props: NumberInputProps) {
   return (
     <MantineNumberInput
       label={label}
-      onChange={(value) => onChange(value ?? defaultValues?.[name])}
+      onChange={(value) => {
+        if (value === '') {
+          onChange(defaultValues?.[name] ?? null);
+        } else {
+          onChange(value);
+        }
+      }}
       error={error}
       {...rest}
       {...restField}

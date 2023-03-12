@@ -13,6 +13,8 @@ import {
   SwitchGroupProps as MantineSwitchGroupProps,
   SwitchProps,
   ColProps,
+  GroupProps,
+  StackProps,
 } from '@mantine/core';
 import { DateInputProps as MantineDateInputProps } from '@mantine/dates';
 import { ReactNode } from 'react';
@@ -28,7 +30,9 @@ export interface Options<OtherProps = {}> {
 }
 
 export type Controlled<T> = { label: ReactNode; name: string } & T;
-
+export type Orientation =
+  | { orientation?: 'horizontal'; orientationProps?: GroupProps }
+  | { orientation?: 'vertical'; orientationProps?: StackProps };
 export type TextInputProps = Controlled<MantineTextInputProps>;
 export type PasswordInputProps = Controlled<MantinePasswordInputProps>;
 export type TextareaProps = Controlled<MantineTextareaProps>;
@@ -46,13 +50,13 @@ export type MultiSelectProps = Controlled<
   }
 >;
 export type CheckboxGroupProps = Controlled<
-  Omit<MantineCheckboxGroupProps, 'children'> & Options<CheckboxProps>
+  Omit<MantineCheckboxGroupProps, 'children'> & Options<CheckboxProps> & Orientation
 >;
 export type RadioGroupProps = Controlled<
-  Omit<MantineRadioGroupProps, 'children'> & Options<RadioProps>
+  Omit<MantineRadioGroupProps, 'children'> & Options<RadioProps> & Orientation
 >;
 export type SwitchGroupProps = Controlled<
-  Omit<MantineSwitchGroupProps, 'children'> & Options<SwitchProps>
+  Omit<MantineSwitchGroupProps, 'children'> & Options<SwitchProps> & Orientation
 >;
 
 export type ControllerProps =
