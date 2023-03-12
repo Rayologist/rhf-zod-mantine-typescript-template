@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import { MultiSelect as MantineMultiSelect } from '@mantine/core';
 import { MultiSelectProps } from 'types';
 import { useController } from 'react-hook-form';
 import ErrorMessage from './ErrorMessage';
 
 function MultiSelect(props: MultiSelectProps) {
-  const { label, name, options, ...rest } = props;
+  const { label, name, ...rest } = props;
+  const [options, setOptions] = useState(props.options);
   const {
     field,
     fieldState: { error: fieldError },
@@ -29,7 +31,7 @@ function MultiSelect(props: MultiSelectProps) {
       onCreate={(query) => {
         const capitalized = query.charAt(0).toUpperCase() + query.substring(1);
         const item = { label: capitalized, value: query };
-        options.push(item);
+        setOptions((prev) => [...prev, item]);
         return item;
       }}
       {...rest}
