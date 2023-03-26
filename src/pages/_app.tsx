@@ -1,5 +1,4 @@
-import type { AppProps } from 'next/app';
-import { GetServerSidePropsContext } from 'next';
+import NextApp, { AppProps, AppContext } from 'next/app';
 import { useState } from 'react';
 import { getCookie, setCookie } from 'cookies-next';
 import Head from 'next/head';
@@ -36,8 +35,12 @@ function App(props: AppProps & { colorScheme: ColorScheme }) {
   );
 }
 
-App.getInitialProps = ({ ctx }: { ctx: GetServerSidePropsContext }) => ({
-  colorScheme: getCookie('mantine-color-scheme', ctx) || 'light',
-});
+App.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await NextApp.getInitialProps(appContext);
+  return {
+    ...appProps,
+    colorScheme: getCookie('mantine-color-scheme', appContext.ctx) || 'dark',
+  };
+};
 
 export default App;
