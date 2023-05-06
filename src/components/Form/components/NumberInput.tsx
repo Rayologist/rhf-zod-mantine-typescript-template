@@ -23,7 +23,10 @@ function NumberInput(props: NumberInputProps) {
       label={label}
       onChange={(value) => {
         if (value === '') {
-          onChange(defaultValues?.[name] ?? null);
+          /**
+           * @see https://mantine.dev/core/number-input/#input-value-type
+           */
+          onChange(defaultValues?.[name] || '');
         } else {
           onChange(value);
         }

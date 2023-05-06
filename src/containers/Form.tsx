@@ -69,7 +69,7 @@ const Form = () => {
   const methods = useHookForm<{
     username: string;
     email: string;
-    age: number | null;
+    age: number | '';
     password: string;
     confirmPassword: string;
     drinks: Array<string>;
@@ -86,7 +86,7 @@ const Form = () => {
     defaultValues: {
       username: '',
       password: '',
-      age: null,
+      age: '',
       confirmPassword: '',
       email: '',
       drinks: [],
