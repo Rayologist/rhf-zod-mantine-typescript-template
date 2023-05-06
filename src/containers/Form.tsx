@@ -12,18 +12,14 @@ const Form = () => {
     .object({
       username: z.string().min(1, { message: 'Required' }),
       password: z.string().min(1, { message: 'Required' }),
-      age: z
-        .number()
-        .positive()
-        .nullable()
-        .superRefine((value, ctx) => {
-          if (value == null) {
-            ctx.addIssue({
-              code: 'custom',
-              message: 'Required',
-            });
-          }
-        }),
+      age: z.union([z.custom<''>(), z.number().positive()]).superRefine((value, ctx) => {
+        if (value == '') {
+          ctx.addIssue({
+            code: 'custom',
+            message: 'Required',
+          });
+        }
+      }),
       confirmPassword: z.string().min(1, { message: 'Required' }),
       email: z.string().min(1, { message: 'Required' }).email({ message: 'Wrong Format' }),
       drinks: z.string().array().min(1, { message: 'Required' }),
