@@ -1,7 +1,7 @@
 import { FileInput as MantineFileInput } from '@mantine/core';
-import { FileInputProps } from 'types';
 import { IconUpload } from '@tabler/icons-react';
 import { useController } from 'react-hook-form';
+import { FileInputProps } from '../../types';
 import ValueComponent from './ValueComponent';
 import ErrorMessage from '../ErrorMessage';
 

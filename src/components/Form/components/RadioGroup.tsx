@@ -1,6 +1,6 @@
 import { Group, Radio, Stack } from '@mantine/core';
-import { RadioGroupProps } from 'types';
 import { useController } from 'react-hook-form';
+import { RadioGroupProps } from '../types';
 import ErrorMessage from './ErrorMessage';
 
 function RadioGroup(props: RadioGroupProps) {

@@ -1,6 +1,6 @@
 import { DateInput as MantineDateInput } from '@mantine/dates';
-import { DateInputProps } from 'types';
 import { useController } from 'react-hook-form';
+import { DateInputProps } from '../types';
 import ErrorMessage from './ErrorMessage';
 
 function DatePickerInput(props: DateInputProps) {

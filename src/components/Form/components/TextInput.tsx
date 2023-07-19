@@ -1,6 +1,6 @@
 import { TextInput as MantineTextInput } from '@mantine/core';
-import { TextInputProps } from 'types';
 import { useController } from 'react-hook-form';
+import { TextInputProps } from '../types';
 import ErrorMessage from './ErrorMessage';
 
 function TextInput(props: TextInputProps) {

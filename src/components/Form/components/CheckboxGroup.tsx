@@ -1,6 +1,6 @@
 import { Group, Checkbox as MantineCheckbox, Stack } from '@mantine/core';
-import { CheckboxGroupProps } from 'types';
 import { useController } from 'react-hook-form';
+import { CheckboxGroupProps } from '../types';
 import ErrorMessage from './ErrorMessage';
 
 function CheckboxGroup(props: CheckboxGroupProps) {

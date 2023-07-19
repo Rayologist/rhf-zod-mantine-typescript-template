@@ -1,5 +1,5 @@
 import React from 'react';
-import { ControllerProps } from 'types';
+import { ControllerProps } from './types';
 import CheckboxGroup from './components/CheckboxGroup';
 import DateInput from './components/DateInput';
 import FileInput from './components/FileInput';

@@ -1,7 +1,7 @@
 import { Select as MantineSelect } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons-react';
-import { SelectProps } from 'types';
 import { useController } from 'react-hook-form';
+import { SelectProps } from '../types';
 import ErrorMessage from './ErrorMessage';
 
 function Select(props: SelectProps) {

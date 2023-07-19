@@ -1,6 +1,6 @@
 import { Group, Stack, Switch } from '@mantine/core';
-import { SwitchGroupProps } from 'types';
 import { useController } from 'react-hook-form';
+import { SwitchGroupProps } from '../types';
 import ErrorMessage from './ErrorMessage';
 
 function SwitchGroup(props: SwitchGroupProps) {
