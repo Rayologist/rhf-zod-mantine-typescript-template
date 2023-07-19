@@ -15,6 +15,8 @@ import {
   FieldValues,
   UseFormProps,
   UseFormReturn,
+  SubmitHandler,
+  SubmitErrorHandler,
   FieldErrors,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,13 +26,13 @@ import FormController from './FormController';
 
 type AsyncDefaultValues<TFieldValues> = (payload?: unknown) => Promise<TFieldValues>;
 
-type SubmitHandler<TFieldValues extends FieldValues, TContext = any> = (
+type SubmitHandlerWithContext<TFieldValues extends FieldValues, TContext = any> = (
   data: TFieldValues,
   context: UseFormReturn<TFieldValues, TContext>,
   event?: React.BaseSyntheticEvent
 ) => unknown | Promise<unknown>;
 
-type SubmitErrorHandler<TFieldValues extends FieldValues, TContext = any> = (
+type SubmitErrorHandlerWithContext<TFieldValues extends FieldValues, TContext = any> = (
   errors: FieldErrors<TFieldValues>,
   context: UseFormReturn<TFieldValues, TContext>,
   event?: React.BaseSyntheticEvent
@@ -43,8 +45,8 @@ type FormProps<TFieldValues extends FieldValues, TContext> = Omit<
   FormControllerProps<TFieldValues, TContext> & {
     defaultValues: TFieldValues | AsyncDefaultValues<TFieldValues>;
     schema?: z.ZodType<TFieldValues>;
-    onSubmit: SubmitHandler<TFieldValues, TContext>;
-    onSubmitError?: SubmitErrorHandler<TFieldValues, TContext>;
+    onSubmit: SubmitHandlerWithContext<TFieldValues, TContext>;
+    onSubmitError?: SubmitErrorHandlerWithContext<TFieldValues, TContext>;
   };
 
 const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>(
@@ -57,8 +59,8 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
     controllers: rawControllers,
     schema,
     defaultValues,
-    onSubmit,
-    onSubmitError,
+    onSubmit: handleOnSubmit,
+    onSubmitError: handleOnSubmitError,
     ...rest
   } = props;
 
@@ -67,6 +69,12 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
     defaultValues: defaultValues as UseFormProps<TFieldValues, TContext>['defaultValues'],
     ...rest,
   });
+
+  const onSubmit: SubmitHandler<TFieldValues> = (values, event) =>
+    handleOnSubmit(values, methods, event);
+
+  const onSubmitError: SubmitErrorHandler<TFieldValues> = (values, event) =>
+    handleOnSubmitError?.(values, methods, event);
 
   /* eslint-disable @typescript-eslint/no-shadow */
   const Form = (
@@ -89,10 +97,7 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
         <Box<'form'>
           component="form"
           id={id}
-          onSubmit={methods.handleSubmit(
-            (values, event) => onSubmit(values, methods, event),
-            (values, event) => onSubmitError?.(values, methods, event)
-          )}
+          onSubmit={methods.handleSubmit(onSubmit, onSubmitError)}
           {...rest}
         >
           <Grid justify="center" gutter="lg" {...grid}>
@@ -117,7 +122,7 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
     <Button type="submit" form={id} loaderProps={{ color: theme.colors.blue[5] }} {...props} />
   );
 
-  return [Form, methods] as const;
+  return [Form, { ...methods, onSubmit, onSubmitError }] as const;
 };
 
 export default useForm;
