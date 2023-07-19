@@ -14,16 +14,27 @@ import {
   FormProvider,
   FieldValues,
   UseFormProps,
-  SubmitHandler,
-  SubmitErrorHandler,
   UseFormReturn,
+  FieldErrors,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Controllers, FormControllerProps } from 'types';
+import { Controllers, FormControllerProps } from './types';
 import FormController from './FormController';
 
 type AsyncDefaultValues<TFieldValues> = (payload?: unknown) => Promise<TFieldValues>;
+
+type SubmitHandler<TFieldValues extends FieldValues, TContext = any> = (
+  data: TFieldValues,
+  context: UseFormReturn<TFieldValues, TContext>,
+  event?: React.BaseSyntheticEvent
+) => unknown | Promise<unknown>;
+
+type SubmitErrorHandler<TFieldValues extends FieldValues, TContext = any> = (
+  errors: FieldErrors<TFieldValues>,
+  context: UseFormReturn<TFieldValues, TContext>,
+  event?: React.BaseSyntheticEvent
+) => unknown | Promise<unknown>;
 
 type FormProps<TFieldValues extends FieldValues, TContext> = Omit<
   UseFormProps<TFieldValues, TContext>,
@@ -32,8 +43,8 @@ type FormProps<TFieldValues extends FieldValues, TContext> = Omit<
   FormControllerProps<TFieldValues, TContext> & {
     defaultValues: TFieldValues | AsyncDefaultValues<TFieldValues>;
     schema?: z.ZodType<TFieldValues>;
-    onSubmit: SubmitHandler<TFieldValues>;
-    onSubmitError?: SubmitErrorHandler<TFieldValues>;
+    onSubmit: SubmitHandler<TFieldValues, TContext>;
+    onSubmitError?: SubmitErrorHandler<TFieldValues, TContext>;
   };
 
 const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>(
@@ -78,7 +89,10 @@ const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>
         <Box<'form'>
           component="form"
           id={id}
-          onSubmit={methods.handleSubmit(onSubmit, onSubmitError)}
+          onSubmit={methods.handleSubmit(
+            (values, event) => onSubmit(values, methods, event),
+            (values, event) => onSubmitError?.(values, methods, event)
+          )}
           {...rest}
         >
           <Grid justify="center" gutter="lg" {...grid}>

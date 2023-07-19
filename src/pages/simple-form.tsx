@@ -13,14 +13,10 @@ export default function AuthenticationTitle() {
       account: '',
       password: '',
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values, ctx) => {
       console.log(values); // eslint-disable-line no-console
       await sleep(1000);
-      methods.setError(
-        'account',
-        { message: 'Incorrect account or password' },
-        { shouldFocus: false }
-      );
+      ctx.setError('account', { message: 'Incorrect account or password' }, { shouldFocus: false });
     },
     schema: z.object({
       account: z.string().min(1, { message: 'Required' }),
