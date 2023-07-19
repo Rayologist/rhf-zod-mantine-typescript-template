@@ -15,13 +15,13 @@ Please refer directly to the codes [here](https://github.com/Rayologist/rhf-zod-
 The props are almost the same as `useForm` in [`React Hook Form`](https://react-hook-form.com/api/useform). However, there are three fields required:
 
 1. defaultvalues: Same as RHF but required
-2. onSubmit: Same as RHF `SubmitHandler` in [`handleSubmit`](https://react-hook-form.com/api/useform/handlesubmit)
+2. onSubmit: Similar to RHF `SubmitHandler` in [`handleSubmit`](https://react-hook-form.com/api/useform/handlesubmit), but comes with an additional `context` parameter, which is of type [`UseFormReturn`](https://react-hook-form.com/ts#UseFormReturn).
 3. controllers: Objects of field props. Required props: control (controlled components), label (Field label), name (HTML input name)
 
 And two optional fields:
 
 1. schema: Zod schema.
-2. onSubmitError: Same as RHF `SubmitErrorHandler` in [`handleSubmit`](https://react-hook-form.com/api/useform/handlesubmit)
+2. onSubmitError: Similar to RHF `SubmitErrorHandler` in [`handleSubmit`](https://react-hook-form.com/api/useform/handlesubmit), but comes with an additional `context` parameter, which is of type [`UseFormReturn`](https://react-hook-form.com/ts#UseFormReturn).
 
 In addition, there are two ways to access `RHF useForm returned methods`:
 
