@@ -13,7 +13,7 @@ const Form = () => {
       username: z.string().min(1, { message: 'Required' }),
       password: z.string().min(1, { message: 'Required' }),
       age: z.union([z.custom<''>(), z.number().positive()]).superRefine((value, ctx) => {
-        if (value == '') {
+        if (value === '') {
           ctx.addIssue({
             code: 'custom',
             message: 'Required',
