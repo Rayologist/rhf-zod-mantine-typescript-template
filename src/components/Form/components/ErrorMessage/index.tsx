@@ -1,7 +1,7 @@
 import { Group, Text, TextProps, useMantineTheme } from '@mantine/core';
 import { IconAlertCircle } from '@tabler/icons-react';
 
-const ErrorMessage = (props: TextProps & { children?: string }) => {
+export const ErrorMessage = (props: TextProps & { children?: string }) => {
   const theme = useMantineTheme();
   const { children, ...rest } = props;
   if (!children?.length) return null;

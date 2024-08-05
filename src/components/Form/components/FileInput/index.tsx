@@ -3,7 +3,7 @@ import { IconUpload } from '@tabler/icons-react';
 import { useController } from 'react-hook-form';
 import { FileInputProps } from '../../types';
 import ValueComponent from './ValueComponent';
-import ErrorMessage from '../ErrorMessage';
+import { ErrorMessage } from '../ErrorMessage';
 
 function FileInput(props: FileInputProps<boolean>) {
   const { label, name, ...rest } = props;

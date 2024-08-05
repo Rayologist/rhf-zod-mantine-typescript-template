@@ -1,7 +1,7 @@
 import { Group, Stack, Switch } from '@mantine/core';
 import { useController } from 'react-hook-form';
 import { SwitchGroupProps } from '../types';
-import ErrorMessage from './ErrorMessage';
+import { ErrorMessage } from './ErrorMessage';
 
 function SwitchGroup(props: SwitchGroupProps) {
   const { label, name, options, orientation = 'horizontal', orientationProps, ...rest } = props;

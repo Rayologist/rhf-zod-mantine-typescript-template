@@ -1,7 +1,7 @@
 import { Textarea as MantineTextarea } from '@mantine/core';
 import { useController } from 'react-hook-form';
 import { TextareaProps } from '../types';
-import ErrorMessage from './ErrorMessage';
+import { ErrorMessage } from './ErrorMessage';
 
 function Textarea(props: TextareaProps) {
   const { label, name, ...rest } = props;

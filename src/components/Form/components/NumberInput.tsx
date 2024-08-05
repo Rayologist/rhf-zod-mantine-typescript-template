@@ -1,7 +1,7 @@
 import { NumberInput as MantineNumberInput } from '@mantine/core';
 import { useController } from 'react-hook-form';
 import { NumberInputProps } from '../types';
-import ErrorMessage from './ErrorMessage';
+import { ErrorMessage } from './ErrorMessage';
 
 function NumberInput(props: NumberInputProps) {
   const { label, name, ...rest } = props;
