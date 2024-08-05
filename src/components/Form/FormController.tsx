@@ -13,7 +13,7 @@ import SwitchGroup from './components/SwitchGroup';
 import TextInput from './components/TextInput';
 import Textarea from './components/Textarea';
 
-function FormController(props: ControllerProps) {
+export function FormController(props: ControllerProps) {
   const { control } = props;
   switch (control) {
     case 'checkbox-group':
@@ -44,5 +44,3 @@ function FormController(props: ControllerProps) {
       return null;
   }
 }
-
-export default FormController;
