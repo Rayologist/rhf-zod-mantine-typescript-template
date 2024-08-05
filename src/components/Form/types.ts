@@ -76,15 +76,20 @@ export type ControllerProps =
   | ({ control: 'text-area' } & TextareaProps)
   | ({ control: 'text-input' } & TextInputProps);
 
-export type Controllers<TFieldValues extends FieldValues, TContext> = {
-  [key in keyof TFieldValues]: ControllerProps & { name: key } & {
+export type ControllerMap<TFieldValues extends FieldValues, TContext> = {
+  [key in keyof TFieldValues]-?: ControllerProps & { name: key } & {
     col?: ColProps;
-    after?: ReactNode | ((ctx: UseFormReturn<TFieldValues, TContext>) => ReactNode);
+    Field?: (props: {
+      ctx: UseFormReturn<TFieldValues, TContext>;
+      fieldComponent: ReactNode;
+    }) => ReactNode;
   };
 };
 
+export type ControllerMapResolver<TFieldValues extends FieldValues = FieldValues, TContext = any> =
+  | ControllerMap<TFieldValues, TContext>
+  | ((context: UseFormReturn<TFieldValues, TContext>) => ControllerMap<TFieldValues, TContext>);
+
 export type FormControllerProps<TFieldValues extends FieldValues = FieldValues, TContext = any> = {
-  controllers:
-    | Controllers<TFieldValues, TContext>
-    | ((context: UseFormReturn<TFieldValues, TContext>) => Controllers<TFieldValues, TContext>);
+  controllers: ControllerMapResolver<TFieldValues, TContext>;
 };

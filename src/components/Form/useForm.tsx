@@ -1,128 +1,117 @@
-import {
-  Button,
-  Grid,
-  ButtonProps,
-  useMantineTheme,
-  Box,
-  GridProps,
-  BoxProps,
-} from '@mantine/core';
-import { useId } from '@mantine/hooks';
-import React, { ReactNode } from 'react';
+import { Grid, Box, GridProps, BoxProps } from '@mantine/core';
 import {
   useForm as useHookForm,
   FormProvider,
   FieldValues,
-  UseFormProps,
+  UseFormProps as UseHookFormProps,
   UseFormReturn,
-  SubmitHandler,
-  SubmitErrorHandler,
   FieldErrors,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Controllers, FormControllerProps } from './types';
-import FormController from './FormController';
+import { ControllerMap, FormControllerProps } from './types';
+import { FormController } from './FormController';
 
 type AsyncDefaultValues<TFieldValues> = (payload?: unknown) => Promise<TFieldValues>;
 
-type SubmitHandlerWithContext<TFieldValues extends FieldValues, TContext = any> = (
-  data: TFieldValues,
-  context: UseFormReturn<TFieldValues, TContext>,
-  event?: React.BaseSyntheticEvent
-) => unknown | Promise<unknown>;
+export type SubmitHandler<TFieldValues extends FieldValues, TContext = any> = (args: {
+  data: TFieldValues;
+  methods: UseFormReturn<TFieldValues, TContext>;
+  event?: React.BaseSyntheticEvent;
+}) => unknown | Promise<unknown>;
 
-type SubmitErrorHandlerWithContext<TFieldValues extends FieldValues, TContext = any> = (
-  errors: FieldErrors<TFieldValues>,
-  context: UseFormReturn<TFieldValues, TContext>,
-  event?: React.BaseSyntheticEvent
-) => unknown | Promise<unknown>;
+export type SubmitErrorHandler<TFieldValues extends FieldValues, TContext = any> = (args: {
+  errors: FieldErrors<TFieldValues>;
+  methods: UseFormReturn<TFieldValues, TContext>;
+  event?: React.BaseSyntheticEvent;
+}) => unknown | Promise<unknown>;
 
-type FormProps<TFieldValues extends FieldValues, TContext> = Omit<
-  UseFormProps<TFieldValues, TContext>,
+export type UseFormProps<TFieldValues extends FieldValues, TContext = any> = Omit<
+  UseHookFormProps<TFieldValues, TContext>,
   'defaultValues'
 > &
   FormControllerProps<TFieldValues, TContext> & {
     defaultValues: TFieldValues | AsyncDefaultValues<TFieldValues>;
     schema?: z.ZodType<TFieldValues>;
-    onSubmit: SubmitHandlerWithContext<TFieldValues, TContext>;
-    onSubmitError?: SubmitErrorHandlerWithContext<TFieldValues, TContext>;
+    onSubmit: SubmitHandler<TFieldValues, TContext>;
+    onSubmitError?: SubmitErrorHandler<TFieldValues, TContext>;
   };
 
-const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>(
-  props: FormProps<TFieldValues, TContext>
-) => {
-  const id = useId();
-  const theme = useMantineTheme();
+export type UseFormReturnValues<TFieldValues extends FieldValues = FieldValues, TContext = any> = {
+  methods: UseFormReturn<TFieldValues, TContext>;
+  controllers: ControllerMap<TFieldValues, TContext>;
+  submit: (e?: React.BaseSyntheticEvent<object, any, any> | undefined) => Promise<void>;
+};
 
+export const useForm = <TFieldValues extends FieldValues = FieldValues, TContext = any>(
+  props: UseFormProps<TFieldValues, TContext>
+): UseFormReturnValues<TFieldValues, TContext> => {
   const {
     controllers: rawControllers,
     schema,
     defaultValues,
-    onSubmit: handleOnSubmit,
-    onSubmitError: handleOnSubmitError,
+    onSubmit,
+    onSubmitError,
     ...rest
   } = props;
 
   const methods = useHookForm<TFieldValues, TContext>({
     resolver: schema ? zodResolver(schema) : undefined,
-    defaultValues: defaultValues as UseFormProps<TFieldValues, TContext>['defaultValues'],
+    defaultValues: defaultValues as UseHookFormProps<TFieldValues, TContext>['defaultValues'],
+    mode: props.mode ?? 'onBlur',
     ...rest,
   });
 
-  const onSubmit: SubmitHandler<TFieldValues> = (values, event) =>
-    handleOnSubmit(values, methods, event);
+  let controllers: ControllerMap<TFieldValues, TContext>;
 
-  const onSubmitError: SubmitErrorHandler<TFieldValues> = (values, event) =>
-    handleOnSubmitError?.(values, methods, event);
+  if (rawControllers instanceof Function) {
+    controllers = rawControllers(methods);
+  } else {
+    controllers = rawControllers;
+  }
 
-  /* eslint-disable @typescript-eslint/no-shadow */
-  const Form = (
-    props: {
-      children?: ReactNode | ((ctx: UseFormReturn<TFieldValues, TContext>) => ReactNode);
-      grid?: Omit<GridProps, 'children'>;
-    } & Omit<BoxProps, 'children'>
-  ) => {
-    const { children, grid, ...rest } = props;
-    let controllers: Controllers<TFieldValues, TContext>;
-
-    if (rawControllers instanceof Function) {
-      controllers = rawControllers(methods);
-    } else {
-      controllers = rawControllers;
-    }
-
-    return (
-      <FormProvider {...methods}>
-        <Box<'form'>
-          component="form"
-          id={id}
-          onSubmit={methods.handleSubmit(onSubmit, onSubmitError)}
-          {...rest}
-        >
-          <Grid justify="center" gutter="lg" {...grid}>
-            {Object.values(controllers).map((field, index) => {
-              const { col, after, ...controllerProps } = field;
-              return (
-                <Grid.Col key={`${field.name}-${index}`} {...col}>
-                  <FormController {...controllerProps} />
-                  {typeof after === 'function' ? after(methods) : after}
-                </Grid.Col>
-              );
-            })}
-          </Grid>
-          {typeof children === 'function' ? children(methods) : children}
-        </Box>
-      </FormProvider>
-    );
-  };
-
-  /* eslint-disable @typescript-eslint/no-shadow */
-  Form.Button = (props: ButtonProps) => (
-    <Button type="submit" form={id} loaderProps={{ color: theme.colors.blue[5] }} {...props} />
+  const submit = methods.handleSubmit(
+    (data, event) => onSubmit({ data, event, methods }),
+    (errors, event) => onSubmitError?.({ errors, event, methods })
   );
 
-  return [Form, { ...methods, onSubmit, onSubmitError }] as const;
+  return { methods, controllers, submit };
 };
 
-export default useForm;
+export type FormProps<TFieldValues extends FieldValues = FieldValues, TContext = any> = {
+  id?: string;
+  children?: React.ReactNode | ((ctx: UseFormReturn<TFieldValues, TContext>) => React.ReactNode);
+  form: UseFormReturnValues<TFieldValues, TContext>;
+  grid?: Omit<GridProps, 'children'>;
+} & Omit<BoxProps, 'children'>;
+
+export function Form<TFieldValues extends FieldValues = FieldValues, TContext = any>(
+  props: FormProps<TFieldValues, TContext>
+) {
+  const {
+    id,
+    children,
+    grid,
+    form: { methods, submit, controllers },
+    ...rest
+  } = props;
+
+  return (
+    <FormProvider {...methods}>
+      <Box<'form'> component="form" id={id} onSubmit={submit} {...rest}>
+        <Grid justify="center" gutter="lg" {...grid}>
+          {Object.values(controllers).map((field) => {
+            const { col, Field, ...controllerProps } = field;
+            const component = <FormController {...controllerProps} />;
+            return (
+              <Grid.Col key={`${field.name}`} {...col}>
+                {Field ? <Field ctx={methods} fieldComponent={component} /> : component}
+              </Grid.Col>
+            );
+          })}
+        </Grid>
+        {typeof children === 'function' ? children(methods) : children}
+      </Box>
+    </FormProvider>
+  );
+}
