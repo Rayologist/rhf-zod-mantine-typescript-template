@@ -12,10 +12,13 @@ import Select from './components/Select';
 import SwitchGroup from './components/SwitchGroup';
 import TextInput from './components/TextInput';
 import Textarea from './components/Textarea';
+import Checkbox from './components/Checkbox';
 
 export function FormController(props: ControllerProps) {
   const { control } = props;
   switch (control) {
+    case 'checkbox':
+      return <Checkbox {...props} />;
     case 'checkbox-group':
       return <CheckboxGroup {...props} />;
     case 'date-input':

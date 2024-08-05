@@ -6,7 +6,7 @@ import {
   TextareaProps as MantineTextareaProps,
   TextInputProps as MantineTextInputProps,
   CheckboxGroupProps as MantineCheckboxGroupProps,
-  CheckboxProps,
+  CheckboxProps as MantineCheckboxProps,
   NumberInputProps as MantineNumberInputProps,
   MultiSelectProps as MantineMultiSelectProps,
   FileInputProps as MantineFileInputProps,
@@ -53,8 +53,9 @@ export type MultiSelectProps = Controlled<
   }
 >;
 export type CheckboxGroupProps = Controlled<
-  Omit<MantineCheckboxGroupProps, 'children'> & Options<CheckboxProps> & Orientation
+  Omit<MantineCheckboxGroupProps, 'children'> & Options<MantineCheckboxProps> & Orientation
 >;
+export type CheckboxProps = Controlled<Omit<MantineCheckboxProps, 'children'>>;
 export type RadioGroupProps = Controlled<
   Omit<MantineRadioGroupProps, 'children'> & Options<RadioProps> & Orientation
 >;
@@ -63,6 +64,7 @@ export type SwitchGroupProps = Controlled<
 >;
 
 export type ControllerProps =
+  | ({ control: 'checkbox' } & CheckboxProps)
   | ({ control: 'checkbox-group' } & CheckboxGroupProps)
   | ({ control: 'date-input' } & DateInputProps)
   | ({ control: 'file-input' } & FileInputProps<boolean>)
