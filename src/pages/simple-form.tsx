@@ -1,6 +1,6 @@
-import { Checkbox, Anchor, Paper, Title, Text, Container, Group, Box } from '@mantine/core';
+import { Anchor, Paper, Title, Text, Container, Group, Button } from '@mantine/core';
 import { z } from 'zod';
-import { useForm } from '../components/Form';
+import { Form, useForm } from '../components/Form';
 
 const sleep = (ms: number) =>
   new Promise((resolve) => {
@@ -8,20 +8,30 @@ const sleep = (ms: number) =>
   });
 
 export default function AuthenticationTitle() {
-  const [Form, methods] = useForm<{ account: string; password: string }>({
+  const schema = z.object({
+    account: z.string().min(1, { message: 'Required' }),
+    password: z.string().min(1, { message: 'Required' }),
+    rememberMe: z.boolean(),
+  });
+
+  type FormValues = z.infer<typeof schema>;
+
+  const form = useForm<FormValues>({
     defaultValues: {
       account: '',
       password: '',
+      rememberMe: false,
     },
-    onSubmit: async (values, ctx) => {
-      console.log(values); // eslint-disable-line no-console
+    onSubmit: async ({ data, methods }) => {
+      console.log(data); // eslint-disable-line no-console
       await sleep(1000);
-      ctx.setError('account', { message: 'Incorrect account or password' }, { shouldFocus: false });
+      methods.setError(
+        'account',
+        { message: 'Incorrect account or password' },
+        { shouldFocus: false }
+      );
     },
-    schema: z.object({
-      account: z.string().min(1, { message: 'Required' }),
-      password: z.string().min(1, { message: 'Required' }),
-    }),
+    schema,
     controllers: {
       account: {
         control: 'text-input',
@@ -35,15 +45,30 @@ export default function AuthenticationTitle() {
         name: 'password',
         withAsterisk: true,
       },
+      rememberMe: {
+        control: 'checkbox',
+        label: 'Remember me',
+        name: 'rememberMe',
+        Field: ({ fieldComponent }) => (
+          <Group position="apart">
+            {fieldComponent}{' '}
+            <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
+              Forgot password?
+            </Anchor>
+          </Group>
+        ),
+      },
     },
   });
 
   const {
-    formState: { isSubmitting },
-  } = methods;
+    methods: {
+      formState: { isSubmitting },
+    },
+  } = form;
 
   return (
-    <Container size={800} my={40}>
+    <Container size={450} my={40}>
       <Title
         align="center"
         sx={(theme) => ({
@@ -59,53 +84,13 @@ export default function AuthenticationTitle() {
           Create account
         </Anchor>
       </Text>
-      <Group>
-        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <Title order={3} mb={20} align="center">
-            With Render Props
-          </Title>
-          {/* eslint-disable @typescript-eslint/no-shadow */}
-          <Form>
-            {({ formState: { isSubmitting } }) => (
-              <Box mt={25}>
-                <Group position="apart">
-                  <Checkbox
-                    label="Remember me"
-                    styles={{ root: { display: 'grid', placeContent: 'center' } }}
-                  />
-                  <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
-                    Forgot password?
-                  </Anchor>
-                </Group>
-                <Form.Button fullWidth mt="xl" loading={isSubmitting} type="submit">
-                  {isSubmitting ? 'Signing in...' : 'Sign in'}
-                </Form.Button>
-              </Box>
-            )}
-          </Form>
-        </Paper>
-
-        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <Title order={3} mb={20} align="center">
-            With Returned Methods
-          </Title>
-          <Form />
-          <Box mt={25}>
-            <Group position="apart">
-              <Checkbox
-                label="Remember me"
-                styles={{ root: { display: 'grid', placeContent: 'center' } }}
-              />
-              <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
-                Forgot password?
-              </Anchor>
-            </Group>
-            <Form.Button fullWidth mt="xl" loading={isSubmitting} type="submit">
-              {isSubmitting ? 'Signing in...' : 'Sign in'}
-            </Form.Button>
-          </Box>
-        </Paper>
-      </Group>
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        <Form form={form}>
+          <Button fullWidth mt="xl" loading={isSubmitting} type="submit">
+            {isSubmitting ? 'Signing in...' : 'Sign in'}
+          </Button>
+        </Form>
+      </Paper>
     </Container>
   );
 }
