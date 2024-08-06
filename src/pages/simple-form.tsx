@@ -51,7 +51,7 @@ export default function AuthenticationTitle() {
         name: 'rememberMe',
         Field: ({ fieldComponent }) => (
           <Group position="apart">
-            {fieldComponent}{' '}
+            {fieldComponent}
             <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
               Forgot password?
             </Anchor>
