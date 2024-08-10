@@ -36,19 +36,16 @@ export default function AuthenticationTitle() {
       account: {
         control: 'text-input',
         label: 'Account',
-        name: 'account',
         withAsterisk: true,
       },
       password: {
         control: 'password-input',
         label: 'Password',
-        name: 'password',
         withAsterisk: true,
       },
       rememberMe: {
         control: 'checkbox',
         label: 'Remember me',
-        name: 'rememberMe',
         Field: ({ fieldComponent }) => (
           <Group position="apart">
             {fieldComponent}

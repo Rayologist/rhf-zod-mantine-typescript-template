@@ -1,8 +1,8 @@
 import { useForm as useHookForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Button, Grid, ColProps, useMantineTheme } from '@mantine/core';
-import { FormController, ControllerProps } from '@components/Form';
+import { Button, Grid, useMantineTheme } from '@mantine/core';
+import { FormController, ControllerMap } from '@components/Form';
 import { IconCheck, IconX } from '@tabler/icons-react';
 
 const Form = () => {
@@ -61,22 +61,9 @@ const Form = () => {
       path: ['confirmPassword'],
     });
 
-  const methods = useHookForm<{
-    username: string;
-    email: string;
-    age: number | '';
-    password: string;
-    confirmPassword: string;
-    drinks: Array<string>;
-    position: string;
-    browser: string;
-    comments: string;
-    date: Date | null;
-    programmingLanguage: Array<string>;
-    resume: File[];
-    notification: string[];
-    code: string;
-  }>({
+  type FormValue = z.infer<typeof schema>;
+
+  const methods = useHookForm<FormValue>({
     resolver: zodResolver(schema),
     defaultValues: {
       username: '',
@@ -97,35 +84,32 @@ const Form = () => {
     mode: 'onTouched',
   });
 
-  const fields: (ControllerProps & { col?: ColProps })[] = [
-    {
+  const notificationValue = methods.watch('notification');
+
+  const controllers: ControllerMap<FormValue> = {
+    username: {
       control: 'text-input',
-      name: 'username',
       label: 'Username',
       withAsterisk: true,
     },
-    {
+    email: {
       control: 'text-input',
       type: 'email',
-      name: 'email',
       label: 'Email',
       withAsterisk: true,
     },
-    {
+    password: {
       control: 'password-input',
-      name: 'password',
       label: 'Password',
       withAsterisk: true,
     },
-    {
+    confirmPassword: {
       control: 'password-input',
-      name: 'confirmPassword',
       label: 'Confirm Password',
       withAsterisk: true,
     },
-    {
+    drinks: {
       control: 'checkbox-group',
-      name: 'drinks',
       label: 'Drinks',
       options: [
         { label: 'Coffee', value: 'coffee' },
@@ -134,9 +118,8 @@ const Form = () => {
       ],
       withAsterisk: true,
     },
-    {
+    position: {
       control: 'select',
-      name: 'position',
       label: 'Position',
       options: [
         { label: 'Backend', value: 'backend' },
@@ -146,9 +129,8 @@ const Form = () => {
       withAsterisk: true,
       placeholder: 'Pick Position',
     },
-    {
+    browser: {
       control: 'radio-group',
-      name: 'browser',
       label: 'Browser',
       options: [
         { label: 'Firefox', value: 'firefox' },
@@ -159,55 +141,36 @@ const Form = () => {
       ],
       withAsterisk: true,
     },
-    {
+    date: {
       control: 'date-input',
-      name: 'date',
       label: 'Date',
       placeholder: 'Pick Date',
       withAsterisk: true,
       allowDeselect: true,
     },
-    {
+    age: {
       control: 'number-input',
-      name: 'age',
       label: 'Age',
       withAsterisk: true,
       min: 1,
     },
-    {
+    programmingLanguage: {
       control: 'multi-select',
-      name: 'programmingLanguage',
       label: 'Programming Language',
       options: [
-        {
-          label: 'Javascript',
-          value: 'javascript',
-        },
-        {
-          label: 'Typescript',
-          value: 'typescript',
-        },
-        {
-          label: 'Go',
-          value: 'go',
-        },
-        {
-          label: 'Python',
-          value: 'python',
-        },
-        {
-          label: 'Rust',
-          value: 'rust',
-        },
+        { label: 'Javascript', value: 'javascript' },
+        { label: 'Typescript', value: 'typescript' },
+        { label: 'Go', value: 'go' },
+        { label: 'Python', value: 'python' },
+        { label: 'Rust', value: 'rust' },
       ],
       clearable: true,
       searchable: true,
       creatable: true,
       withAsterisk: true,
     },
-    {
+    resume: {
       control: 'file-input',
-      name: 'resume',
       label: 'Resume',
       multiple: true,
       clearable: true,
@@ -218,9 +181,8 @@ const Form = () => {
         lg: 12,
       },
     },
-    {
+    comments: {
       control: 'text-area',
-      name: 'comments',
       label: 'Comments',
       withAsterisk: true,
       col: {
@@ -228,9 +190,8 @@ const Form = () => {
         lg: 12,
       },
     },
-    {
+    notification: {
       control: 'switch-group',
-      name: 'notification',
       label: 'Settings',
       options: [
         {
@@ -238,7 +199,7 @@ const Form = () => {
           value: 'agreed',
           color: 'teal',
           thumbIcon:
-            methods.watch('notification').length > 0 ? (
+            notificationValue && notificationValue.length > 0 ? (
               <IconCheck size={12} color={theme.colors.teal[theme.fn.primaryShade()]} stroke={3} />
             ) : (
               <IconX size={12} color={theme.colors.red[theme.fn.primaryShade()]} stroke={3} />
@@ -250,10 +211,9 @@ const Form = () => {
         lg: 12,
       },
     },
-    {
+    code: {
       control: 'pin-input',
       label: 'Verification Code',
-      name: 'code',
       oneTimeCode: true,
       placeholder: '',
       withAsterisk: true,
@@ -266,7 +226,7 @@ const Form = () => {
         mt: 10,
       },
     },
-  ];
+  };
 
   return (
     <FormProvider {...methods}>
@@ -276,11 +236,12 @@ const Form = () => {
         })}
       >
         <Grid justify="center" gutter="xl">
-          {fields.map((field, index) => {
-            const { col } = field;
+          {Object.entries(controllers).map(([name, field]) => {
+            const { col, Field, ...controllerProps } = field;
+            const component = <FormController {...controllerProps} name={name} />;
             return (
-              <Grid.Col xs={12} sm={12} md={6} lg={6} key={`${field.name}-${index}`} {...col}>
-                <FormController {...field} />
+              <Grid.Col xs={12} sm={12} md={6} lg={6} key={name} {...col}>
+                {Field ? <Field ctx={methods} fieldComponent={component} /> : component}
               </Grid.Col>
             );
           })}
