@@ -15,34 +15,38 @@ import Textarea from './components/Textarea';
 import Checkbox from './components/Checkbox';
 
 export function FormController(props: Controlled<ControllerProps>) {
-  const { control } = props;
+  const { control, ...others } = props;
+  /**
+   * `any` is used here because the `control` prop is used to determine the type of component to render.
+   */
+  const rest = others as any;
   switch (control) {
     case 'checkbox':
-      return <Checkbox {...props} />;
+      return <Checkbox {...rest} />;
     case 'checkbox-group':
-      return <CheckboxGroup {...props} />;
+      return <CheckboxGroup {...rest} />;
     case 'date-input':
-      return <DateInput {...props} />;
+      return <DateInput {...rest} />;
     case 'file-input':
-      return <FileInput {...props} />;
+      return <FileInput {...rest} />;
     case 'multi-select':
-      return <MultiSelect {...props} />;
+      return <MultiSelect {...rest} />;
     case 'number-input':
-      return <NumberInput {...props} />;
+      return <NumberInput {...rest} />;
     case 'password-input':
-      return <PasswordInput {...props} />;
+      return <PasswordInput {...rest} />;
     case 'pin-input':
-      return <PinInput {...props} />;
+      return <PinInput {...rest} />;
     case 'radio-group':
-      return <RadioGroup {...props} />;
+      return <RadioGroup {...rest} />;
     case 'select':
-      return <Select {...props} />;
+      return <Select {...rest} />;
     case 'switch-group':
-      return <SwitchGroup {...props} />;
+      return <SwitchGroup {...rest} />;
     case 'text-input':
-      return <TextInput {...props} />;
+      return <TextInput {...rest} />;
     case 'text-area':
-      return <Textarea {...props} />;
+      return <Textarea {...rest} />;
     default:
       return null;
   }
