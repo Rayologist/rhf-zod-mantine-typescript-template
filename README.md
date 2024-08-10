@@ -84,11 +84,10 @@ function MyForm() {
 #### Required Properties
 
 1. `defaultValues`: The initial values for your form fields.
-2. `onSubmit`: Submission handler function. Receives `data`, `event`, and `methods` (of type [`UseFormReturn`](https://react-hook-form.com/ts#UseFormReturn).) as parameters.
-3. `controllers`: Object defining the form fields and their properties.
+2. `onSubmit`: Submission handler function. Receives `data`, `event`, and `methods` (of type [`UseFormReturn`](https://react-hook-form.com/ts#UseFormReturn)) as parameters.
+3. `controllers`: Object defining the form fields and their properties. Each key in the `controllers` object represents a form field.
    - `control` (required): The controlled component for the field (e.g., 'text-input', 'password-input').
    - `label` (required): The field's label.
-   - `name` (required): The HTML input name for the field, which must match the corresponding key in the defaultValues object. This ensures correct data binding and validation.
    - `Field` (optional): A custom render function for additional flexibility (as described in the following section).
    - `options` (required in `Select`, `MultiSelect`, `CheckboxGroup`, etc.): For controllers that deal with options, an options prop is used instead of Mantine's `data` prop. The options prop is an array of Option objects:
 
