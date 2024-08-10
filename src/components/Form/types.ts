@@ -35,33 +35,29 @@ export type Controlled<T> = { label: ReactNode; name: string } & T;
 export type Orientation =
   | { orientation?: 'horizontal'; orientationProps?: GroupProps }
   | { orientation?: 'vertical'; orientationProps?: StackProps };
-export type TextInputProps = Controlled<MantineTextInputProps>;
-export type PasswordInputProps = Controlled<MantinePasswordInputProps>;
-export type TextareaProps = Controlled<MantineTextareaProps>;
-export type NumberInputProps = Controlled<MantineNumberInputProps>;
-export type DateInputProps = Controlled<MantineDateInputProps>;
-export type PinInputProps = Controlled<MantinePinInputProps> & InputWrapperBaseProps;
-export type FileInputProps<T extends boolean> = Controlled<MantineFileInputProps<T>>;
-export type SelectProps = Controlled<
-  Omit<MantineSelectProps, 'data'> & {
-    options: MantineSelectProps['data'];
-  }
->;
-export type MultiSelectProps = Controlled<
-  Omit<MantineMultiSelectProps, 'data'> & {
-    options: MantineMultiSelectProps['data'];
-  }
->;
-export type CheckboxGroupProps = Controlled<
-  Omit<MantineCheckboxGroupProps, 'children'> & Options<MantineCheckboxProps> & Orientation
->;
-export type CheckboxProps = Controlled<Omit<MantineCheckboxProps, 'children'>>;
-export type RadioGroupProps = Controlled<
-  Omit<MantineRadioGroupProps, 'children'> & Options<RadioProps> & Orientation
->;
-export type SwitchGroupProps = Controlled<
-  Omit<MantineSwitchGroupProps, 'children'> & Options<SwitchProps> & Orientation
->;
+export type TextInputProps = MantineTextInputProps;
+export type PasswordInputProps = MantinePasswordInputProps;
+export type TextareaProps = MantineTextareaProps;
+export type NumberInputProps = MantineNumberInputProps;
+export type DateInputProps = MantineDateInputProps;
+export type PinInputProps = MantinePinInputProps & InputWrapperBaseProps;
+export type FileInputProps<T extends boolean> = MantineFileInputProps<T>;
+export type SelectProps = Omit<MantineSelectProps, 'data'> & {
+  options: MantineSelectProps['data'];
+};
+export type MultiSelectProps = Omit<MantineMultiSelectProps, 'data'> & {
+  options: MantineMultiSelectProps['data'];
+};
+export type CheckboxGroupProps = Omit<MantineCheckboxGroupProps, 'children'> &
+  Options<MantineCheckboxProps> &
+  Orientation;
+export type CheckboxProps = Omit<MantineCheckboxProps, 'children'>;
+export type RadioGroupProps = Omit<MantineRadioGroupProps, 'children'> &
+  Options<RadioProps> &
+  Orientation;
+export type SwitchGroupProps = Omit<MantineSwitchGroupProps, 'children'> &
+  Options<SwitchProps> &
+  Orientation;
 
 export type ControllerProps =
   | ({ control: 'checkbox' } & CheckboxProps)
@@ -78,8 +74,8 @@ export type ControllerProps =
   | ({ control: 'text-area' } & TextareaProps)
   | ({ control: 'text-input' } & TextInputProps);
 
-export type ControllerMap<TFieldValues extends FieldValues, TContext> = {
-  [key in keyof TFieldValues]-?: ControllerProps & { name: key } & {
+export type ControllerMap<TFieldValues extends FieldValues = FieldValues, TContext = any> = {
+  [Key in keyof TFieldValues]-?: ControllerProps & { label: string } & {
     col?: ColProps;
     Field?: (props: {
       ctx: UseFormReturn<TFieldValues, TContext>;

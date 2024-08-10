@@ -1,9 +1,9 @@
 import { DateInput as MantineDateInput } from '@mantine/dates';
 import { useController } from 'react-hook-form';
-import { DateInputProps } from '../types';
+import { Controlled, DateInputProps } from '../types';
 import { ErrorMessage } from './ErrorMessage';
 
-function DatePickerInput(props: DateInputProps) {
+function DatePickerInput(props: Controlled<DateInputProps>) {
   const { label, name, ...rest } = props;
   const {
     field,

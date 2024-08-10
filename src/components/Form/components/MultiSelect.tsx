@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { MultiSelect as MantineMultiSelect } from '@mantine/core';
 import { useController } from 'react-hook-form';
-import { MultiSelectProps } from '../types';
+import { Controlled, MultiSelectProps } from '../types';
 import { ErrorMessage } from './ErrorMessage';
 
-function MultiSelect(props: MultiSelectProps) {
+function MultiSelect(props: Controlled<MultiSelectProps>) {
   const { label, name, ...rest } = props;
   const [options, setOptions] = useState(props.options);
   const {

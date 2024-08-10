@@ -1,10 +1,10 @@
 import { PasswordInput as MantinePasswordInput } from '@mantine/core';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import { useController } from 'react-hook-form';
-import { PasswordInputProps } from '../types';
+import { Controlled, PasswordInputProps } from '../types';
 import { ErrorMessage } from './ErrorMessage';
 
-function PasswordInput(props: PasswordInputProps) {
+function PasswordInput(props: Controlled<PasswordInputProps>) {
   const { label, name, ...rest } = props;
   const {
     field,

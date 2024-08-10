@@ -1,9 +1,9 @@
 import { Input, PinInput as MantinePinInput } from '@mantine/core';
 import { useController } from 'react-hook-form';
-import { PinInputProps } from '../types';
+import { Controlled, PinInputProps } from '../types';
 import { ErrorMessage } from './ErrorMessage';
 
-function PinInput(props: PinInputProps) {
+function PinInput(props: Controlled<PinInputProps>) {
   const {
     label,
     name,

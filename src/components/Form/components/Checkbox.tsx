@@ -1,9 +1,9 @@
 import { Checkbox as MantineCheckbox } from '@mantine/core';
 import { useController } from 'react-hook-form';
-import { CheckboxProps } from '../types';
+import { CheckboxProps, Controlled } from '../types';
 import { ErrorMessage } from './ErrorMessage';
 
-function Checkbox(props: CheckboxProps) {
+function Checkbox(props: Controlled<CheckboxProps>) {
   const { label, name, ...rest } = props;
   const {
     field: { value, ...field },

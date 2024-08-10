@@ -1,9 +1,9 @@
 import { Group, Checkbox as MantineCheckbox, Stack } from '@mantine/core';
 import { useController } from 'react-hook-form';
-import { CheckboxGroupProps } from '../types';
+import { CheckboxGroupProps, Controlled } from '../types';
 import { ErrorMessage } from './ErrorMessage';
 
-function CheckboxGroup(props: CheckboxGroupProps) {
+function CheckboxGroup(props: Controlled<CheckboxGroupProps>) {
   const { label, name, options, orientation = 'horizontal', orientationProps, ...rest } = props;
   const {
     field,

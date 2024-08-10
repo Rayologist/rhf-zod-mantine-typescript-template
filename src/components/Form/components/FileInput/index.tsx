@@ -1,11 +1,11 @@
 import { FileInput as MantineFileInput } from '@mantine/core';
 import { IconUpload } from '@tabler/icons-react';
 import { useController } from 'react-hook-form';
-import { FileInputProps } from '../../types';
+import { Controlled, FileInputProps } from '../../types';
 import ValueComponent from './ValueComponent';
 import { ErrorMessage } from '../ErrorMessage';
 
-function FileInput(props: FileInputProps<boolean>) {
+function FileInput(props: Controlled<FileInputProps<boolean>>) {
   const { label, name, ...rest } = props;
   const {
     field,

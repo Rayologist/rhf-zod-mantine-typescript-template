@@ -1,5 +1,5 @@
 import React from 'react';
-import { ControllerProps } from './types';
+import { Controlled, ControllerProps } from './types';
 import CheckboxGroup from './components/CheckboxGroup';
 import DateInput from './components/DateInput';
 import FileInput from './components/FileInput';
@@ -14,7 +14,7 @@ import TextInput from './components/TextInput';
 import Textarea from './components/Textarea';
 import Checkbox from './components/Checkbox';
 
-export function FormController(props: ControllerProps) {
+export function FormController(props: Controlled<ControllerProps>) {
   const { control } = props;
   switch (control) {
     case 'checkbox':

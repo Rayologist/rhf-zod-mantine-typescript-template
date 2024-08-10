@@ -100,11 +100,11 @@ export function Form<TFieldValues extends FieldValues = FieldValues, TContext = 
     <FormProvider {...methods}>
       <Box<'form'> component="form" id={id} onSubmit={submit} {...rest}>
         <Grid justify="center" gutter="lg" {...grid}>
-          {Object.values(controllers).map((field) => {
+          {Object.entries(controllers).map(([name, field]) => {
             const { col, Field, ...controllerProps } = field;
-            const component = <FormController {...controllerProps} />;
+            const component = <FormController {...controllerProps} name={name} />;
             return (
-              <Grid.Col key={`${field.name}`} {...col}>
+              <Grid.Col key={name} {...col}>
                 {Field ? <Field ctx={methods} fieldComponent={component} /> : component}
               </Grid.Col>
             );

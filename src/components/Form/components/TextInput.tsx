@@ -1,9 +1,9 @@
 import { TextInput as MantineTextInput } from '@mantine/core';
 import { useController } from 'react-hook-form';
-import { TextInputProps } from '../types';
+import { Controlled, TextInputProps } from '../types';
 import { ErrorMessage } from './ErrorMessage';
 
-function TextInput(props: TextInputProps) {
+function TextInput(props: Controlled<TextInputProps>) {
   const { label, name, ...rest } = props;
   const {
     field,
